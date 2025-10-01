@@ -1,0 +1,52 @@
+﻿@using HackathonBloomWatch.Models
+@model EspeciePlanta
+
+@{
+    ViewData["Title"] = "Eliminar Especie";
+}
+<div class="d-flex flex-column align-items-center" style="min-height: 75vh;">
+    <h4 class="text-center mb-3" style="z-index:1;">¿Estás seguro de que quieres eliminar esto?</h4>
+    <div class="p-3 mx-auto" style="max-width: 550px; border-radius: 50px; background: #ffffff; box-shadow:  20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;">
+        <h2 class="fs-4 fw-bold text-center mb-3">@Model.NombreEspecie</h2>
+        <div class="d-flex flex-column">
+            <span class="text-center">
+                <b>Especie: </b>@Model.NombreEspecie
+            </span>
+            <span class="text-center">
+                <b>IdEspecie: </b>@Model.IdEspeciePlanta
+            </span>
+        </div>
+        <div class="d-flex flex-column px-2">
+            <div class="zoomable-image my-2 mx-auto rounded rounded-3" style="max-height: 280px;">
+                <img class="img-fluid" src="@ViewBag.Imagen" alt="Imagen de la Especie" />
+            </div>
+            <form asp-action="Eliminar">
+                <input type="hidden" asp-for="IdEspeciePlanta" />
+                <div class="mt-3 d-flex justify-content-around align-items-center">
+                    <a class="btn btn-secondary text-nowrap" href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i>&nbsp;Cancelar</a>
+                    @if (Model.CampaniaDetalles.Count == 0)
+                    {
+                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i>&nbsp;Eliminar</button>
+                    }
+                    else
+                    {
+                        <span class="text-danger p-2">La especie está asociado a algunas Campañas. No se puede eliminar!</span>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        document.querySelector(".zoomable-image").addEventListener("mousemove", function (event) {
+            const img = this.querySelector("img");
+            const rect = img.getBoundingClientRect();
+            const x = (event.clientX - rect.left) / rect.width;
+            const y = (event.clientY - rect.top) / rect.height;
+            img.style.transformOrigin = `${x * 100}% ${y * 100}%`;
+        });
+    </script>
+}

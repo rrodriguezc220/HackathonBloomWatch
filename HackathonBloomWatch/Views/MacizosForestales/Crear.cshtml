@@ -1,0 +1,195 @@
+﻿@model HackathonBloomWatch.Models.MacizoForestal
+
+@{
+    ViewData["Title"] = "Crear";
+}
+
+<div class="pt-3">
+    <div class="mx-auto bg-light p-4 rounded-3">
+        <h2 class="text-center text-congressBlue-950 fw-bold mb-1">Registrar Macizo Forestal</h2>
+        <p class="text-center text-danger mb-4">(*) Campos Obligatorios</p>
+        <form asp-action="Crear" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row p-3 bg-black-50 rounded rounded-3">
+                <div class="col-12 col-md-6">
+                    <div class="form-floating mb-3">
+                        <select asp-for="Departamento" class="form-select" aria-label="Departamento">
+                            <option value="Cajamarca">Cajamarca</option>
+                        </select>
+                        <label asp-for="Departamento" class="form-label">Departamento <span class="text-danger">*</span></label>
+                        <span class="text-danger" asp-validation-for="Departamento"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select asp-for="Provincia" class="form-select" aria-label="Provincia" asp-items="ViewBag.Provincias">
+                            <option value="" selected disabled>Seleccione la provincia</option>
+                        </select>
+                        <label asp-for="Provincia" class="form-label">Provincia <span class="text-danger">*</span></label>
+                        <span class="text-danger" asp-validation-for="Provincia"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select asp-for="Distrito" class="form-select" aria-label="Distrito">
+                            <option value="" selected disabled>Seleccione el distrito</option>
+                        </select>
+                        <label asp-for="Distrito" class="form-label">Distrito <span class="text-danger">*</span></label>
+                        <span class="text-danger" asp-validation-for="Distrito"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select asp-for="Localidad" class="form-select" aria-label="Localidad">
+                            <option value="" selected disabled>Seleccione la localidad</option>
+                        </select>
+                        <label asp-for="Localidad" class="form-label">Localidad <span class="text-danger">*</span></label>
+                        <span class="text-danger" asp-validation-for="Localidad"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="AreaHectareas" class="form-control" placeholder="Área (ha)" />
+                        <label asp-for="AreaHectareas" class="form-label">Área (ha)</label>
+                        <span class="text-danger" asp-validation-for="AreaHectareas"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="CoordenadaEste" class="form-control" placeholder="Coordenada Este" />
+                        <label asp-for="CoordenadaEste" class="form-label">Coordenada Este</label>
+                        <span class="text-danger" asp-validation-for="CoordenadaEste"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="CoordenadaNorte" class="form-control" placeholder="Coordenada Norte" />
+                        <label asp-for="CoordenadaNorte" class="form-label">Coordenada Norte</label>
+                        <span class="text-danger" asp-validation-for="CoordenadaNorte"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Subir Archivo (KML) <span class="text-danger">*</span></label>
+                        <input type="file" name="archivo" id="archivo" class="form-control" accept=".kml" required />
+                        <span class="text-danger">@Html.ValidationMessage("archivo")</span>
+                    </div>
+                    <div class="mb-3">
+                        <div id="map" style="height: 300px; border: 1px solid #ccc;"></div>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-between ">
+                        <input type="hidden" name="geojsonData" id="geojsonOutput" />
+                        <div>
+                            <a class="btn btn-secondary" href="javascript:history.back()">
+                                <i class="fa-solid fa-arrow-left"></i>&nbsp;Cancelar
+                            </a>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa-solid fa-floppy-disk"></i>&nbsp;Guardar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://unpkg.com/togeojson@0.16.0/togeojson.js"></script>
+
+    <script>
+        var map = L.map('map').setView([-7.1639, -78.5003], 8);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        var geoJsonLayer = null; // Variable para almacenar la capa actual
+
+        document.getElementById('archivo').addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var text = e.target.result;
+
+                    try {
+                        var geoJson = convertToGeoJSON(text, file.name);
+
+                        // Guardamos el resultado en un campo oculto
+                        document.getElementById('geojsonOutput').value = JSON.stringify(geoJson);
+
+                        // Eliminar la capa anterior si existe
+                        if (geoJsonLayer) {
+                            map.removeLayer(geoJsonLayer);
+                        }
+
+                        geoJsonLayer = L.geoJSON(geoJson, {
+                            style: function(feature) {
+                                return { color: "red", weight: 2, fillOpacity: 0.5 };
+                            },
+                            pointToLayer: function(feature, latlng) {
+                                return L.circleMarker(latlng, {
+                                    radius: 6,
+                                    fillColor: "red",
+                                    color: "red",
+                                    weight: 2,
+                                    opacity: 1,
+                                    fillOpacity: 0.8
+                                });
+                            }
+                        }).addTo(map);
+                        map.fitBounds(geoJsonLayer.getBounds());
+
+                    } catch (error) {
+                        alert("No se pudo visualizar el archivo.");
+                    }
+                };
+
+                if (file.name.endsWith('.kml') || file.name.endsWith('.kmz')) {
+                    reader.readAsText(file);
+                }
+            }
+        });
+
+        function convertToGeoJSON(text, filename) {
+            var parser = new DOMParser();
+            var kml = parser.parseFromString(text, "text/xml");
+            return toGeoJSON.kml(kml);
+        }
+
+        // obtener los distritos de la provincia seleccionada
+        $('#Provincia').change(function () {
+
+            var provincia = $('#Provincia').val();
+
+            $.getJSON('@Url.Action("GetDistritos", "Sigdrac")',
+            {
+                provincia: provincia
+            }, function (data) {
+
+                var items = '<option disabled selected value="">Seleccione el distrito</option>';
+
+                $.each(data, function (i, distrito) {
+                    items += "<option value='" + distrito + "'>" + distrito + "</option>";
+                });
+
+                $('#Distrito').html(items);
+                // resetear localidad
+                $('#Localidad').html('<option disabled selected value="">Seleccione la localidad</option>');
+            });
+        });
+
+        // obtener los distritos de la provincia seleccionada
+        $('#Distrito').change(function () {
+
+            var distrito = $('#Distrito').val();
+
+            $.getJSON('@Url.Action("GetLocalidades", "Sigdrac")',
+            {
+                distrito: distrito
+            }, function (data) {
+
+                var items = '<option disabled selected value="">Seleccione la localidad</option>';
+
+                $.each(data, function (i, localidad) {
+                    items += "<option value='" + localidad + "'>" + localidad + "</option>";
+                });
+
+                $('#Localidad').html(items);
+            });
+        });
+
+    </script>
+}

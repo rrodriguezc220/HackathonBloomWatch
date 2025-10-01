@@ -1,0 +1,225 @@
+﻿@model HackathonBloomWatch.ViewModels.DatosKmlViewModel
+
+@{
+    ViewData["Title"] = "Procesar Archivo";
+}
+
+<div class="pt-3">
+    <div class="w-100 mx-auto bg-light p-4 rounded-3">
+        <h2 class="text-center text-green-950 fw-bold mb-4">Procesamiento del archivo</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-green-950 fw-bold mt-3">
+                    <i class="fa-solid fa-diagram-project text-green-500"></i> Datos de la campaña
+                </p>
+                <div class="d-flex flex-column p-4 bg-white rounded-3">
+                    <span class="text-green-800">
+                        Nombre de la campaña
+                    </span>
+                    <span class="mt-1 text-green-950 fw-bold">
+                        @Model.Campania.NombreCampania
+                    </span>
+                    <span class="mt-3 text-green-800">
+                        Año de la campaña
+                    </span>
+                    <span class="mt-1 text-congressBlue-950 fw-bold">
+                        @Model.Campania.AnioCampania
+                    </span>
+                    <span class="mt-3 text-green-800">
+                        Fecha de proceso
+                    </span>
+                    <span class="mt-1 text-congressBlue-950 fw-bold">
+                        @Model.Campania.FechaProceso.ToShortDateString()
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <p class="text-congressBlue-950 fw-bold mt-3">
+                    <i class="fa-solid fa-file text-green-500"></i> Detalles del archivo
+                </p>
+                <div class="d-flex flex-column p-4 bg-white rounded-3">
+                    <span class="text-green-800">
+                        Especies de planta: @Model.Especies.Count() Registros
+                    </span>
+                    <button type="button" class="btn btn-info mt-1 me-auto" data-bs-toggle="modal" data-bs-target="#verEspeciesModal">
+                        Ver <i class="fa-solid fa-list"></i>
+                    </button>
+                    <span class="mt-3 text-green-800">
+                        Macisos forestales: @Model.Macizos.Count() Registros
+                    </span>
+                    <button type="button" class="btn btn-info mt-1 me-auto" data-bs-toggle="modal" data-bs-target="#verMacisosModal">
+                        Ver <i class="fa-solid fa-list"></i>
+                    </button>
+                    <span class="mt-3 text-green-800">
+                        Detalles de campaña: @Model.CampaniaDetalles.Count() Registros
+                    </span>
+                    <button type="button" class="btn btn-info mt-1 me-auto" data-bs-toggle="modal" data-bs-target="#verDetalleModal">
+                        Ver <i class="fa-solid fa-list"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+            <form id="guardarForm">
+                @Html.AntiForgeryToken()
+                <button type="button" onclick="enviarDatos()" class="btn btn-success">
+                    Confirmar y Guardar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="verEspeciesModal" tabindex="-1" aria-labelledby="verEspeciesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="verEspeciesModalLabel">Especies de Plantas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                    </tr>
+                    @foreach (var especie in Model.Especies)
+                    {
+                        <tr>
+                            <td>@especie.NombreEspecie</td>
+                            <td>
+                                @if (especie.ExisteEspecie)
+                                {
+                                    <span class="badge bg-warning">Ya existe</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Nuevo</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="verMacisosModal" tabindex="-1" aria-labelledby="verMacisosModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="verMacisosModalLabel">Macisos forestales</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Departamento</th>
+                        <th>Provincia</th>
+                        <th>Estado</th>
+                    </tr>
+                    @foreach (var macizo in Model.Macizos)
+                    {
+                        <tr>
+                            <td>@macizo.Departamento</td>
+                            <td>@macizo.Provincia</td>
+                            <td>
+                                @if (macizo.ExisteMacizo)
+                                {
+                                    <span class="badge bg-warning">Ya existe</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Nuevo</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="verDetalleModal" tabindex="-1" aria-labelledby="verDetalleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="verDetalleModalLabel">Detalles de Campaña</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <tr>
+                        <th>Actividad</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                        <th>Especie</th>
+                        <th>Macizo</th>
+                        <th>Cantidad Elementos</th>
+                        <th>Macizo Forestal</th>
+                        <th>Agroforestal</th>
+                    </tr>
+                    @foreach (var detalle in Model.CampaniaDetalles)
+                    {
+                        <tr>
+                            <td>@detalle.TipoActividad</td>
+                            <td>@detalle.EstadoActividad</td>
+                            <td>@detalle.FechaActividad?.ToShortDateString()</td>
+                            <td>@detalle.IdEspeciePlanta</td>
+                            <td>@detalle.IdMacizoForestal</td>
+                            <td>@detalle.CantidadElementos</td>
+                            <td>@detalle.ValorMacizoForestal</td>
+                            <td>@detalle.Agroforestal</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        function enviarDatos() {
+            const datos = @Html.Raw(Json.Serialize(Model));
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GuardarInformacion", "Campanias")',
+                data: JSON.stringify(datos),
+                contentType: "application/json",
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function (res) {
+                    if (res.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Éxito!',
+                            text: res.message
+                        }).then(() => {
+                            window.location.href = '@Url.Action("Index", "Campanias")';
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Advertencia',
+                            text: res.message
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error del servidor',
+                        text: 'Ocurrió un error inesperado.'
+                    });
+                }
+            });
+        }
+        
+    </script>
+}

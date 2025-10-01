@@ -1,0 +1,106 @@
+﻿@model HackathonBloomWatch.Models.MacizoForestal
+
+@{
+    ViewData["Title"] = "Eliminar Macizo";
+}
+
+<div class="pt-3">
+    <div class="w-100 mx-auto bg-light p-4 rounded-3">
+        <h2 class="text-center text-green-900 fw-bold mb-1">Eliminar Macizo Forestal</h2>
+        <h4 class="text-center text-green-900 mb-3">¿Estás seguro de que quieres eliminar este registro?</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-green-950 fw-bold mt-3">
+                    <i class="fa-solid fa-location-dot text-green-500"></i> Información de localización
+                </p>
+                <div class="d-flex flex-column p-4 bg-white rounded-3">
+                    <span class="text-green-800">
+                        Departamento
+                    </span>
+                    <span class="mt-1 text-green-950 fw-bold">
+                        @Model.Departamento
+                    </span>
+                    <span class="mt-3 text-green-800">
+                        Provincia
+                    </span>
+                    <span class="mt-1 text-green-950 fw-bold">
+                        @Model.Provincia
+                    </span>
+                    <span class="mt-3 text-green-800">
+                        Distrito
+                    </span>
+                    <span class="mt-1 text-green-950 fw-bold">
+                        @Model.Distrito
+                    </span>
+                    <span class="mt-3 text-green-800">
+                        Localidad
+                    </span>
+                    <span class="mt-1 text-green-950 fw-bold">
+                        @Model.Localidad
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <p class="text-green-950 fw-bold mt-3">
+                    <i class="fa-solid fa-map-location-dot text-green-500"></i> Información de geometría
+                </p>
+                <div class="d-flex flex-column p-4 bg-white rounded-3">
+                    <span class="text-green-800">
+                        Area (ha)
+                    </span>
+                    <span class="mt-1 text-green-950 fw-bold">
+                        @Model.AreaHectareas
+                    </span>
+                    <span class="mt-3 text-green-800">
+                        Coordenada Este
+                    </span>
+                    <span class="mt-1 text-green-950 fw-bold">
+                        @Model.CoordenadaEste
+                    </span>
+                    <span class="mt-3 text-green-800">
+                        Coordenada Norte
+                    </span>
+                    <span class="mt-1 text-green-950 fw-bold">
+                        @Model.CoordenadaNorte
+                    </span>
+                </div>
+                <p class="text-green-950 fw-bold mt-3">
+                    <i class="fa-solid fa-earth-americas text-green-500"></i> Mapa
+                </p>
+                <div class="d-flex flex-column p-4 bg-white rounded-3">
+                    <div id="map" style="height: 256px; border: 1px solid #ccc;"></div>
+                </div>
+            </div>
+        </div>
+        <form asp-action="Eliminar">
+            <input type="hidden" asp-for="IdMacizoForestal" />
+            <div class="mt-3 d-flex justify-content-around">
+                <a class="btn btn-secondary" href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i>&nbsp;Cancelar</a>
+                @if (Model.CampaniaDetalles.Count == 0)
+                {
+                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i>&nbsp;Eliminar</button>
+                }
+                else
+                {
+                    <span class="text-danger p-2">El macizo forestal está asociado a algunas Campañas. No se puede eliminar!</span>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        const geojsonString = '@Html.Raw(ViewBag.GeoJson)';
+        const geojson = JSON.parse(geojsonString);
+
+        var map = L.map('map').setView([-7.1639, -78.5003], 8);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        var geoJsonLayer = L.geoJSON(geojson).addTo(map);
+
+        map.fitBounds(geoJsonLayer.getBounds());
+    </script>
+}

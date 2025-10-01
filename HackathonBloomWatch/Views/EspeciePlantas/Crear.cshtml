@@ -1,0 +1,134 @@
+﻿@using HackathonBloomWatch.Models
+@model EspeciePlanta
+
+@{
+    ViewData["Title"] = "Crear Especie";
+}
+
+<div class="py-2">
+    <div class="mx-auto">
+        <h2 class="fs-2 fw-bold text-center mb-1">Registrar Especie de Planta</h2>
+        <p class="text-center text-danger mb-4">(*) Campos Obligatorios</p>
+        <form asp-action="Crear" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="NombreEspecie" class="form-control" placeholder="Nombre de la Especie" autocomplete="off">
+                        <label asp-for="NombreEspecie" class="form-label">Nombre de la Especie <span class="text-danger">*</span></label>
+                        <span asp-validation-for="NombreEspecie" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="NombreComun" class="form-control" placeholder="Nombre Común" autocomplete="off">
+                        <label asp-for="NombreComun" class="form-label">Nombre Común</label>
+                        <span asp-validation-for="NombreComun" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-file mb-4">
+                        <div class="form-file__action">
+                            <label asp-for="ImagenEspecie" class="form-label">Imagen de la Especie de Planta</label>
+                            <input type="file" name="image" id="image" accept="image/*" hidden />
+                        </div>
+                        <div class="form-file__result" id="result-image">
+                            <div class="form-file__h4" id="h4-zone">
+                                <h4>Click o arrastre y suelte aquí la imagen...</h4>
+                            </div>
+                            <img id="img-result" alt="" />
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a class="btn btn-secondary" href="javascript:history.back()">
+                                <i class="fa-solid fa-arrow-left"></i>&nbsp;Cancelar
+                            </a>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-success" onclick="return validarImagen()">
+                                <i class="fa-solid fa-floppy-disk"></i>&nbsp;Guardar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    @*Validación de la imagen insertada*@
+    <script>
+        const $input = document.getElementById('image');
+        const $dropZone = document.getElementById('result-image');
+        const $dragTextZone = document.getElementById('h4-zone');
+        const $dragText = $dragTextZone.querySelector("h4");
+        const $img = document.getElementById('img-result');
+
+        /* enlaza click de la zona al input file */
+        $dropZone.addEventListener('click', (e) => {
+            $input.click();
+        });
+
+        /* Añade el estilo cuando el archivo está sobre la zona */
+        $dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            //$dropZone.classList.add('form-file__result--active');
+            $dragTextZone.classList.add('form-file__result--active');
+            $dragText.textContent = "Suelte la imagen";
+        });
+
+        /* remueve el estilo cuando el archivo esta fuera de la zona */
+        $dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            //$dropZone.classList.remove('form-file__result--active');
+            $dragTextZone.classList.remove('form-file__result--active');
+            $dragText.textContent = "Click o arrastre y suelte aquí la imagen...";
+        });
+
+        /* remueve el estilo cuando el archivo fue soltado en la zona */
+        $dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            /* console.log(e.dataTransfer) */
+            $input.files = e.dataTransfer.files
+            const file = $input.files[0];
+
+            uploadImage(file);
+            //$dropZone.classList.remove('form-file__result--active');
+            $dragTextZone.classList.remove('form-file__result--active');
+            $dragText.textContent = "Click o arrastre y suelte aquí la imagen...";
+        });
+
+        const uploadImage = (file) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.addEventListener('load', (e) => {
+                $img.setAttribute('src', e.target.result);
+            });
+        };
+
+        $input.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            uploadImage(file);
+            $dragTextZone.classList.remove('form-file__result--active');
+        });
+
+        function validarImagen() {
+            if (document.getElementById("image").value == "") {
+                Swal.fire({
+                    title: "¡Error!",
+                    text: "Seleccione la imagen de la especie de planta!",
+                    icon: "error",
+                    confirmButtonText: "Aceptar",
+                    confirmButtonColor: "#d33"
+                });
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

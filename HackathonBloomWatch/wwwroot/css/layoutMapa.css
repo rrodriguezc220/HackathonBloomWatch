@@ -1,0 +1,87 @@
+﻿
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.main {
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    transition: all 0.35s ease-in-out;
+}
+
+#sidebar {
+    width: 350px;
+    min-width: 350px;
+    z-index: 1000;
+    transition: all 0.25s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+    #sidebar.collapse {
+        width: 70px;
+        min-width: 70px;
+    }
+
+#toggle-btn-collapse,
+#toggle-btn-expande {
+    background-color: transparent;
+    cursor: pointer;
+    border: 0;
+    padding: 1rem 1.5rem;
+}
+
+    #toggle-btn-collapse i,
+    #toggle-btn-expande i {
+        font-size: 1.35rem;
+    }
+
+.sidebar-logo {
+    margin-right: auto;
+    padding-left: .7rem;
+}
+
+#sidebar.collapse .sidebar-filters,
+#sidebar.collapse .div-btn-collapse {
+    display: none;
+}
+
+#sidebar.collapse .sidebar-header {
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar.collapse .sidebar-logo {
+    margin: auto;
+    padding: 0;
+}
+
+#sidebar.collapse .div-btn-expande {
+    display: block !important;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        width: 250px;
+        min-width: 250px;
+    }
+
+        #sidebar.collapse {
+            width: 70px;
+            min-width: 70px;
+        }
+}
+
+/* Estilos para las etiquetas Tooltip del mapa */
+.map-label {
+    background-color: #efefef !important; /* Fondo blanco semi-transparente */
+    border: 1px solid #828282 !important;
+    color: #404040 !important; /* Color del texto */
+    /*font-weight: bold;*/ /* Texto en negrita */
+}

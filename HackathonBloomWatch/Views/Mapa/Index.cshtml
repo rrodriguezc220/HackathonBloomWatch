@@ -1,0 +1,628 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutMapa.cshtml";
+    ViewData["Title"] = "Mapa";
+}
+
+@section Filtros {
+    <div>
+        <h5 class="text-center mb-3">Filtrar información</h5>
+        <div>
+            <p class="text-green-950 fw-bold">
+                <i class="fa-solid fa-diagram-project text-green-500"></i> Campaña
+            </p>
+            <div class="form-floating mb-3">
+                <select id="campania" class="form-select" asp-items="ViewBag.Campanias"></select>
+                <label for="campania" class="form-label">Campaña</label>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <p class="text-green-950 fw-bold mb-0">
+                    <i class="fa-solid fa-map-location-dot text-green-500"></i> Localización
+                </p>
+                <button class="btn btn-sm btn-secondary" onclick="resetearSelects()">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </button>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select id="provincia" class="form-select" asp-items="ViewBag.Provincias">
+                    <option value="" selected disabled>Seleccione la provincia</option>
+                </select>
+                <label for="provincia" class="form-label">Provincia</label>
+            </div>
+            <div class="form-floating mb-3">
+                <select id="distrito" class="form-select">
+                    <option value="" selected disabled>Seleccione el distrito</option>
+                </select>
+                <label for="distrito" class="form-label">Distrito</label>
+            </div>
+            <div class="form-floating mb-3">
+                <select id="localidad" class="form-select">
+                    <option value="" selected disabled>Seleccione la localidad</option>
+                </select>
+                <label for="localidad" class="form-label">Localidad</label>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <a class="btn btn-secondary" type="button" asp-action="Index">
+                    <i class="fa-solid fa-arrow-rotate-right"></i> Reset
+                </a>
+                <button id="btnRecargarMapa" class="btn btn-success" type="button" onclick="cargarCampaniaDetalle()">
+                    <i class="fa-solid fa-sliders"></i> Filtrar
+                </button>
+            </div>
+            <div id="spinnerCargando" class="text-center">
+                <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Cargando mapa...</span>
+                </div>
+                <p class="text-success mt-1">Cargando mapa...</p>
+            </div>
+            <div class="d-none" id="contenedorNumRegistros">
+                <p class="text-green-950 fw-bold mb-0">
+                    <i class="fa-solid fa-tree text-green-500"></i> <span id="textNumRegistros"></span> <span class="text-green-500" id="numRegistros"></span> registros
+                </p>
+            </div>
+        </div>
+    </div>
+}
+
+<div id="contenedorMapa">
+    <div id="map" class="min-vh-100"></div>
+</div>
+
+<div class="modal fade" id="detalleModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-lg-down modal-xl">
+        <div class="modal-content bg-light">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Detalle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="text-green-950 fw-bold mt-3">
+                            <i class="fa-solid fa-diagram-project text-green-500"></i> Detalle del registro
+                        </p>
+                        <div class="d-flex flex-column p-3 bg-white rounded-3">
+                            <span class="text-green-800">
+                                Actividad
+                            </span>
+                            <span class="mt-1 text-green-950 fw-bold" id="modalTipoActividad"></span>
+                            <span class="mt-3 text-green-800">
+                                Estado
+                            </span>
+                            <span class="mt-1 text-green-950 fw-bold" id="modalEstado"></span>
+                            <span class="mt-3 text-green-800">
+                                Fecha de actividad
+                            </span>
+                            <span class="mt-1 text-green-950 fw-bold" id="modalFechaActividad"></span>
+                        </div>
+                        <p class="text-green-950 fw-bold mt-3">
+                            <i class="fa-solid fa-location-dot text-green-500"></i> Información de localización
+                        </p>
+                        <div class="d-flex flex-column p-3 bg-white rounded-3">
+                            <span class="mt-3 text-green-800">
+                                Provincia
+                            </span>
+                            <span class="mt-1 text-green-950 fw-bold" id="modalProvincia"></span>
+                            <span class="mt-3 text-green-800">
+                                Distrito
+                            </span>
+                            <span class="mt-1 text-green-950 fw-bold" id="modalDistrito"></span>
+                            <span class="mt-3 text-green-800">
+                                Localidad
+                            </span>
+                            <span class="mt-1 text-green-950 fw-bold" id="modalLocalidad"></span>
+                            <span class="mt-3 text-green-800">
+                                Área (ha)
+                            </span>
+                            <span class="mt-1 text-green-950 fw-bold" id="modalArea"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="text-green-950 fw-bold mt-3">
+                            <i class="fa-brands fa-pagelines text-green-500"></i> Especie de Planta
+                        </p>
+                        <div class="d-flex flex-column p-3 bg-white rounded-3">
+                            <div id="modalImagenContainer" class="text-center">
+                                <img id="modalImagen" src="" alt="Imagen de especie" style="max-width: 100%; max-height: 250px;" />
+                            </div>
+                            <span class="mt-3 text-green-800">
+                                Nombre Científico
+                            </span>
+                            <span class="mt-1 text-green-950 fw-bold" id="modalNombreEspecie"></span>
+                            <span class="mt-3 text-green-800">
+                                Nombre Común
+                            </span>
+                            <span class="mt-1 text-green-950 fw-bold" id="modalNombreComun"></span>
+                            <span class="mt-3 text-green-800">
+                                Cantidad de Elementos
+                            </span>
+                            <span class="mt-1 text-green-950 fw-bold" id="modalCantidadElementos"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="estadisticaModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-lg-down modal-xl">
+        <div class="modal-content bg-light">
+            <div class="modal-header">
+                <h5 class="modal-title text-green-950" id="modalLabel">Estadísticas - <span id="tituloModal" class="fw-bold"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div id="spinnerEstadisticas" class="text-center">
+                    <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Cargando Estadísticas...</span>
+                    </div>
+                    <p class="text-success mt-1">Cargando Estadísticas...</p>
+                </div>
+                <div id="contenedorEstadisticas" class="d-none">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="bg-white p-3 rounded-3">
+                                <p class="d-flex justify-content-between text-green-950">Macizos Forestales <i class="fa-solid fa-earth-americas text-green-500"></i></p>
+                                <div class="d-flex flex-column">
+                                    <span class="text-green-800">
+                                        Plantación
+                                    </span>
+                                    <span class="text-green-950 display-6" id="totalMacizosPlantacion">0</span>
+                                    <span class="text-green-800">
+                                        Hoyada
+                                    </span>
+                                    <span class="text-green-950 display-6" id="totalMacizosHoyada">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="bg-white p-3 rounded-3">
+                                <p class="d-flex justify-content-between text-green-950">Área total (ha) <i class="fa-solid fa-draw-polygon text-green-500"></i></p>
+                                <div class="d-flex flex-column">
+                                    <span class="text-green-800">
+                                        Plantación
+                                    </span>
+                                    <span class="text-green-950 display-6" id="areaPlantaciones">0</span>
+                                    <span class="text-green-800">
+                                        Hoyada
+                                    </span>
+                                    <span class="text-green-950 display-6" id="areaHoyadas">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="bg-white p-3 rounded-3">
+                                <p class="d-flex justify-content-between text-green-950">Cantidad Elementos <i class="fa-solid fa-tree text-green-500"></i></p>
+                                <div class="d-flex flex-column">
+                                    <span class="text-green-800">
+                                        Plantación
+                                    </span>
+                                    <span class="text-green-950 display-6" id="cantidadElementosPlantacion">0</span>
+                                    <span class="text-green-800">
+                                        Hoyada
+                                    </span>
+                                    <span class="text-green-950 display-6" id="cantidadElementosHoyada">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="bg-white p-3 rounded-3" style="aspect-ratio: 2 / 1;">
+                                <canvas id="chartPlantaciones" class="w-100"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="bg-white p-3 rounded-3" style="aspect-ratio: 2 / 1;">
+                                <canvas id="chartHoyadas" class="w-100"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        var map = L.map('map').setView([-7.161, -78.512], 1); // Coordenadas aproximadas de Cajamarca
+
+        // Capas base
+        var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        });
+
+        var esriLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: '&copy; Esri'
+        });
+
+        var baseMaps = {
+            "OpenStreetMap": osmLayer,
+            "ESRI Satelital": esriLayer
+        };
+
+        // Agrega la capa base
+        osmLayer.addTo(map);
+        map.options.maxZoom = osmLayer.options.maxZoom - 1;
+
+        L.control.layers(baseMaps).addTo(map);
+
+        // Definir capas vacías
+        var regionCajamarcaLayer = L.layerGroup();
+        var provinciasLayer = L.layerGroup();
+        var distritosLayer = L.layerGroup();
+        var campaniaDetalleLayer = L.layerGroup();
+
+        // ===== Estilos para OSM =====
+        const OSM_BASE = { color: "#3d3d3d", weight: 1, fillOpacity: 0.1 };
+        const OSM_HOVER = { color: "#2fac66", weight: 1, fillOpacity: 0.1 };
+
+        // ===== Estilos para ESRI =====
+        const ESRI_BASE = { color: "#e6e6e6", weight: 1, fillOpacity: 0.1 };
+        const ESRI_HOVER = { color: "#37f0c5", weight: 1, fillOpacity: 0.1 };
+
+        // Variables globales para estilos actuales
+        let currentBaseStyle = OSM_BASE;
+        let currentHoverStyle = OSM_HOVER;
+
+        // Función para cargar GeoJSON estáticos
+        function cargarGeoJSON(url, capa, ajustarZoom = false) {
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                var geoLayer = L.geoJSON(data, {
+                    style: currentBaseStyle,
+                    onEachFeature: function (feature, layer) {
+                        var nivelLugar = "Departamento";
+                        var nombreLugar = "CAJAMARCA";
+
+                        if (feature.properties.NOMB_DIST) {
+                            layer.bindTooltip(feature.properties.NOMB_DIST, {
+                                permanent: true,
+                                direction: 'center',
+                                className: 'map-label'
+                            });
+                            nivelLugar = "Distrito";
+                            nombreLugar = feature.properties.NOMB_DIST;
+                        } else if (feature.properties.NOMB_PROV) {
+                            layer.bindTooltip(feature.properties.NOMB_PROV, {
+                                permanent: true,
+                                direction: 'center',
+                                className: 'map-label'
+                            });
+                            nivelLugar = "Provincia";
+                            nombreLugar = feature.properties.NOMB_PROV;
+                        }
+
+                        // Eventos de hover
+                        layer.on("mouseover", function () {
+                            layer.setStyle(currentHoverStyle);
+                        });
+                        layer.on("mouseout", function () {
+                            layer.setStyle(currentBaseStyle);
+                        });
+
+                        layer.on("click", function () {
+                            // Mostrar modal con información del lugar
+                            $("#contenedorEstadisticas").addClass("d-none");
+                            $("#spinnerEstadisticas").removeClass("d-none");
+                            $("#estadisticaModal").modal("show");
+
+                            var idCampania = $('#campania').val();
+
+                            $.ajax({
+                                url: '@Url.Action("GetEstadisticaLugar", "Mapa")',
+                                data: {
+                                    idCampania: idCampania,
+                                    nivelLugar: nivelLugar,
+                                    nombreLugar: nombreLugar
+                                },
+                                success: function (dataEstadisticas) {
+
+                                    $("#tituloModal").text(nivelLugar + " " + nombreLugar);
+
+                                    $("#totalMacizosPlantacion").text(dataEstadisticas.totalMacizosPlantacion);
+                                    $("#totalMacizosHoyada").text(dataEstadisticas.totalMacizosHoyada);
+                                    $("#cantidadElementosPlantacion").text(dataEstadisticas.cantidadElementosPlantacion);
+                                    $("#cantidadElementosHoyada").text(dataEstadisticas.cantidadElementosHoyada);
+                                    $("#areaPlantaciones").text(dataEstadisticas.areaPlantaciones);
+                                    $("#areaHoyadas").text(dataEstadisticas.areaHoyadas);
+
+                                    // Cargar gráficos
+                                    generarGrafico(
+                                        'chartPlantaciones',
+                                        dataEstadisticas.labelEspeciesPlantaciones,
+                                        dataEstadisticas.dataPlantaciones,
+                                        '#00B00A', // verde fondo
+                                        'Cantidad de Plantaciones'
+                                    );
+
+                                    generarGrafico(
+                                        'chartHoyadas',
+                                        dataEstadisticas.labelEspeciesHoyadas,
+                                        dataEstadisticas.dataHoyadas,
+                                        '#DB3A33', // marrón fondo
+                                        'Cantidad de Hoyadas'
+                                    );
+
+                                    $("#spinnerEstadisticas").addClass("d-none");
+                                    $("#contenedorEstadisticas").removeClass("d-none");
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error("Error al cargar el mapa:", error);
+                                }
+                            });
+                        });
+
+                    }
+                });
+                geoLayer.addTo(capa);
+
+                // Si es la región de Cajamarca, ajustamos el zoom al contenido campaniaDetalleLayer.getLayers()[0].getLayers().length
+                if (ajustarZoom) {
+                    var bounds = geoLayer.getBounds();
+                    if (bounds.isValid()) {
+                        setTimeout(function () {
+                            map.invalidateSize(); // Recalcular tamaño
+                            map.fitBounds(bounds); // Aplicar zoom correctamente
+                        }, 200); // Ajusta el timeout si es necesario
+                    }
+                }
+            })
+            .catch(error => console.error('Error cargando GeoJSON:', error));
+        }
+
+        function generarGrafico(idCanvas, etiquetas, datos, colorFondo, etiqueta) {
+            
+            const ctx = document.getElementById(idCanvas);
+
+            // Si ya hay un gráfico previo, destrúyelo
+            if (ctx.chartInstance) {
+                ctx.chartInstance.destroy();
+            }
+
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: etiquetas,
+                    datasets: [{
+                        label: etiqueta,
+                        data: datos,
+                        backgroundColor: colorFondo
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: etiqueta + " por Especies de Plantas",
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function (ctx) {
+                                    return `${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('es-PE')}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return value.toLocaleString('es-PE'); // formato 999,999.99
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Guardar instancia del gráfico para futuras destrucciones
+            ctx.chartInstance = chart;
+        }
+
+        function cargarCampaniaDetalle() {
+            var idCampania = $('#campania').val();
+            var provincia = $('#provincia').val();
+            var distrito = $('#distrito').val();
+            var localidad = $('#localidad').val();
+
+            // mostrar el spinner de carga
+            $("#contenedorNumRegistros").addClass("d-none");
+            $("#spinnerCargando").removeClass("d-none");
+
+            $.ajax({
+                url: '@Url.Action("GetCampaniaGeoJson", "Mapa")',
+                data: {
+                    idCampania: idCampania,
+                    provincia: provincia,
+                    distrito: distrito,
+                    localidad: localidad
+                },
+                success: function (geoJsonData) {
+                    actualizarCampaniaDetalleLayer(geoJsonData);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error al cargar el mapa:", error);
+                }
+            });
+
+        }
+
+        function actualizarCampaniaDetalleLayer(geoJsonData){
+            // limpiar capa
+            campaniaDetalleLayer.clearLayers();
+
+            var geoLayer = L.geoJSON(geoJsonData, {
+                style: function (feature) {
+                    return {
+                        color: feature.properties.estadoActividad !== "Hoyada" ? "#00B00A" : "#DB3A33",
+                        weight: 1,
+                        fillOpacity: 0.3,
+                    };
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.on("click", function () {
+                        $("#modalTipoActividad").text(feature.properties.tipoActividad);
+                        $("#modalEstado").text(feature.properties.estadoActividad);
+                        $("#modalFechaActividad").text(feature.properties.fechaActividad);
+                        $("#modalCantidadElementos").text(feature.properties.cantidadElementos);
+                        $("#modalNombreEspecie").text(feature.properties.nombreEspecie);
+                        $("#modalProvincia").text(feature.properties.provincia);
+                        $("#modalDistrito").text(feature.properties.distrito);
+                        $("#modalArea").text(feature.properties.areaHectareas);
+                        $("#modalLocalidad").text(feature.properties.localidad);
+                        $("#modalNombreComun").text(feature.properties.nombreComun);
+
+                        const imagenUrl = feature.properties.imagenEspecie;
+                        if (imagenUrl) {
+                            $("#modalImagen").attr("src", imagenUrl);
+                            $("#modalImagenContainer").css("display", "block");
+                        } else {
+                            $("#modalImagenContainer").css("display", "none");
+                        }
+                        $("#detalleModal").modal("show");
+                    });
+                }
+            });
+
+            geoLayer.addTo(campaniaDetalleLayer);
+
+            var bounds = geoLayer.getBounds();
+            if (bounds.isValid()) {
+                setTimeout(function () {
+                    map.invalidateSize(); // Recalcular tamaño
+                    map.fitBounds(bounds); // Aplicar zoom correctamente
+                }, 200); // Ajusta el timeout si es necesario
+            } else {
+                var cajamarcaBounds = regionCajamarcaLayer.getLayers()[0].getBounds();
+
+                if (cajamarcaBounds.isValid()) {
+                    setTimeout(function () {
+                        map.invalidateSize(); // Recalcular tamaño
+                        map.fitBounds(cajamarcaBounds); // Aplicar zoom correctamente
+                    }, 200); // Ajusta el timeout si es necesario
+                }
+            }
+            $("#spinnerCargando").addClass("d-none");
+            if (geoJsonData.length > 0) {
+                $("#numRegistros").text(geoJsonData.length);
+                $("#textNumRegistros").text("Se encontraron");
+            } else {
+                $("#numRegistros").text("");
+                $("#textNumRegistros").text("No se encontraron");
+            }
+            $("#contenedorNumRegistros").removeClass("d-none");
+        }
+
+        // Cargar capas estáticas
+        cargarGeoJSON('/geoJson/region_cajamarca.json', regionCajamarcaLayer, true);
+        cargarGeoJSON('/geoJson/provincias_cajamarca.json', provinciasLayer);
+        cargarGeoJSON('/geoJson/distritos_cajamarca.json', distritosLayer);
+
+        // Detectar cambio de mapa base y actualizar estilos globales
+        map.on('baselayerchange', function (e) {
+            if (e.name === "ESRI Satelital") {
+                currentBaseStyle = ESRI_BASE;
+                currentHoverStyle = ESRI_HOVER;
+            } else {
+                currentBaseStyle = OSM_BASE;
+                currentHoverStyle = OSM_HOVER;
+            }
+
+            // Aplicar el nuevo estilo base a todas las capas visibles
+            cambiarEstilo(regionCajamarcaLayer, currentBaseStyle);
+            cambiarEstilo(provinciasLayer, currentBaseStyle);
+            cambiarEstilo(distritosLayer, currentBaseStyle);
+        });
+
+        function cambiarEstilo(layerGroup, style) {
+            layerGroup.eachLayer(function (layer) {
+                if (layer.setStyle) {
+                    layer.setStyle(style);
+                }
+            });
+        }
+
+        cargarCampaniaDetalle();
+
+            // Evento para cambiar capas según el zoom
+        map.on('zoomend', function () {
+            var zoomLevel = map.getZoom();
+
+            map.eachLayer(function (layer) {
+
+                if (layer !== baseMaps["OpenStreetMap"] && layer !== baseMaps["ESRI Satelital"]) {
+                    map.removeLayer(layer);
+                }
+            });
+
+            if (zoomLevel <= 8) {
+                regionCajamarcaLayer.addTo(map);
+            } else if (zoomLevel > 8 && zoomLevel <= 9) {
+                provinciasLayer.addTo(map);
+            } else if (zoomLevel > 9) {
+                distritosLayer.addTo(map);
+            }
+            campaniaDetalleLayer.addTo(map);
+        });
+
+        // obtener los distritos de la provincia seleccionada
+        $('#provincia').change(function () {
+
+            var provincia = $('#provincia').val();
+
+            $.getJSON('@Url.Action("GetDistritos", "Mapa")',
+                {
+                    provincia: provincia
+                }, function (data) {
+
+                    var items = '<option disabled selected value="">Seleccione el distrito</option>';
+
+                    $.each(data, function (i, distrito) {
+                        items += "<option value='" + distrito + "'>" + distrito + "</option>";
+                    });
+
+                    $('#distrito').html(items);
+                    // resetear localidad
+                    $('#localidad').html('<option disabled selected value="">Seleccione la localidad</option>');
+                });
+        });
+
+        // obtener los distritos de la provincia seleccionada
+        $('#distrito').change(function () {
+
+            var distrito = $('#distrito').val();
+
+            $.getJSON('@Url.Action("GetLocalidades", "Mapa")',
+                {
+                    distrito: distrito
+                }, function (data) {
+
+                    var items = '<option disabled selected value="">Seleccione la localidad</option>';
+
+                    $.each(data, function (i, localidad) {
+                        items += "<option value='" + localidad + "'>" + localidad + "</option>";
+                    });
+
+                    $('#localidad').html(items);
+                });
+        });
+
+        function resetearSelects() {
+            $('#provincia').val('');
+            $('#distrito').val('');
+            $('#localidad').val('');
+            $('#distrito').html('<option disabled selected value="">Seleccione el distrito</option>');
+            $('#localidad').html('<option disabled selected value="">Seleccione la localidad</option>');
+        }
+
+    </script>
+}

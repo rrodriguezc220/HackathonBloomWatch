@@ -1,0 +1,173 @@
+﻿@model HackathonBloomWatch.ViewModels.MacizoPaginadoViewModel
+
+@{
+    ViewData["Title"] = "Macizos";
+}
+
+<div class="mt-3">
+    <h2>Lista de Macizos Forestales</h2>
+    <div class="row my-4">
+        <div class="col-md-3 mb-3 mb-md-0">
+            <a class="btn btn-success" asp-action="Crear">
+                <i class="fa-solid fa-plus"></i>&nbsp;Nuevo Macizo Forestal
+            </a>
+        </div>
+        <div class="col-md-9">
+            <form method="get">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="input-group">
+                    <select asp-for="@Model.BusquedaProvincia" name="busquedaProvincia" class="form-select" aria-label="Provincia" asp-items="ViewBag.Provincias">
+                        <option disabled selected value="">Provincia</option>
+                    </select>
+                    <select asp-for="@Model.BusquedaDistrito" name="busquedaDistrito" class="form-select" aria-label="Distrito" asp-items="ViewBag.Distritos">
+                        <option disabled selected value="">Distrito</option>
+                    </select>
+                    <select asp-for="@Model.BusquedaLocalidad" name="busquedaLocalidad" class="form-select" aria-label="Localidad" asp-items="ViewBag.Localidades">
+                        <option disabled selected value="">Localidad</option>
+                    </select>
+                    <button id="botonBusqueda" type="submit" class="btn btn-outline-primary">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span class="d-none d-md-inline-block">Buscar</span>
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    @if (Model.Macizos.Count == 0)
+    {
+        <div class="col-md-12">
+            <p>No se encontraron macizos forestales que coincidan con la búsqueda.</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover text-nowrap">
+                <thead>
+                    <tr class="bg-green-200">
+                        <th>
+                            IdMacizo
+                        </th>
+                        <th>
+                            Provincia
+                        </th>
+                        <th>
+                            Distrito
+                        </th>
+                        <th>
+                            Localidad
+                        </th>
+                        <th style="position: sticky; right: 0;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Macizos)
+                    {
+                        <tr>
+                            <td>
+                                @item.IdMacizoForestal
+                            </td>
+                            <td>
+                                @item.Provincia
+                            </td>
+                            <td>
+                                @item.Distrito
+                            </td>
+                            <td>
+                                @item.Localidad
+                            </td>
+                            <td class="text-end" style="position: sticky; right: 0; background-color: #fff;">
+                                <a class="btn-sm btn-warning" asp-action="Editar" asp-route-id="@item.IdMacizoForestal" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar Macizo"><i class="fa-solid fa-pen"></i></a>
+                                <a class="btn-sm btn-info" asp-action="Detalle" asp-route-id="@item.IdMacizoForestal" data-bs-toggle="tooltip" data-bs-placement="top" title="Detalles del Macizo"><i class="fa-solid fa-list"></i></a>
+                                <a class="btn-sm btn-danger" asp-action="Eliminar" asp-route-id="@item.IdMacizoForestal" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Macizo"><i class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<nav class="py-2">
+    <ul class="pagination justify-content-center">
+        @if (Model.TotalPaginas > 1)
+        {
+            int inicio = Math.Max(1, Math.Min(Model.TotalPaginas - 4, Model.PaginaActual - 2));
+            int fin = Math.Min(Model.TotalPaginas, inicio + 4);
+
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", "MacizosForestales", new { busquedaProvincia = Model.BusquedaProvincia, busquedaDistrito = Model.BusquedaDistrito, busquedaLocalidad = Model.BusquedaLocalidad, paginaActual = Model.PaginaActual - 5 })">&laquo;</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", "MacizosForestales", new { busquedaProvincia = Model.BusquedaProvincia, busquedaDistrito = Model.BusquedaDistrito, busquedaLocalidad = Model.BusquedaLocalidad, paginaActual = Model.PaginaActual - 1 })">&lsaquo;</a>
+            </li>
+            @for (int pagina = inicio; pagina <= fin; pagina++)
+            {
+                <li class="page-item @(pagina == Model.PaginaActual ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", "MacizosForestales", new { busquedaProvincia = Model.BusquedaProvincia, busquedaDistrito = Model.BusquedaDistrito, busquedaLocalidad = Model.BusquedaLocalidad, paginaActual = pagina })">@pagina</a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", "MacizosForestales", new { busquedaProvincia = Model.BusquedaProvincia, busquedaDistrito = Model.BusquedaDistrito, busquedaLocalidad = Model.BusquedaLocalidad, paginaActual = Model.PaginaActual + 1 })">&rsaquo;</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", "MacizosForestales", new { busquedaProvincia = Model.BusquedaProvincia, busquedaDistrito = Model.BusquedaDistrito, busquedaLocalidad = Model.BusquedaLocalidad, paginaActual = Model.PaginaActual + 5 })">&raquo;</a>
+            </li>
+        }
+    </ul>
+</nav>
+
+@section Scripts {
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+        // obtener los distritos de la provincia seleccionada
+        $('#BusquedaProvincia').change(function () {
+
+            var provincia = $('#BusquedaProvincia').val();
+
+            $.getJSON('@Url.Action("GetDistritos", "Sigdrac")',
+            {
+                provincia: provincia
+            }, function (data) {
+
+                var items = '<option disabled selected value="">Distrito</option>';
+
+                $.each(data, function (i, distrito) {
+                    items += "<option value='" + distrito + "'>" + distrito + "</option>";
+                });
+
+                $('#BusquedaDistrito').html(items);
+                // resetear localidad
+                $('#Localidad').html('<option disabled selected value="">Localidad</option>');
+            });
+        });
+
+        // obtener los distritos de la provincia seleccionada
+        $('#BusquedaDistrito').change(function () {
+
+            var distrito = $('#BusquedaDistrito').val();
+
+            $.getJSON('@Url.Action("GetLocalidades", "Sigdrac")',
+            {
+                distrito: distrito
+            }, function (data) {
+
+                var items = '<option disabled selected value="">Localidad</option>';
+
+                $.each(data, function (i, localidad) {
+                    items += "<option value='" + localidad + "'>" + localidad + "</option>";
+                });
+
+                $('#BusquedaLocalidad').html(items);
+            });
+        });
+    </script>
+}

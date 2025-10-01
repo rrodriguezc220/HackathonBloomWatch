@@ -1,0 +1,123 @@
+﻿@model HackathonBloomWatch.ViewModels.CampaniaPaginadoViewModel
+
+@{
+    ViewData["Title"] = "Campañas";
+}
+
+<div class="mt-3">
+    <h2>Lista de Campañas</h2>
+    <div class="row d-fex flex-column flex-md-row my-4">
+        <div class="col-8 col-md-4 col-lg-6 mb-3 mb-md-0">
+            <a class="btn btn-success" asp-action="ImportacionMasiva">
+                <i class="fa-solid fa-plus"></i>&nbsp;Importación Masiva
+            </a>
+        </div>
+        <div class="col-12 col-md-8 col-lg-6">
+            <form method="get">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="input-group">
+                    <input type="number" value="@Model.BusquedaAnio" name="busquedaAnio" class="form-control" placeholder="Año de la campaña" aria-label="Año de la campaña" autocomplete="off" />
+                    <button id="botonBusqueda" type="submit" class="btn btn-outline-primary">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span class="d-none d-md-inline-block">Buscar</span>
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    @if (Model.Campanias.Count == 0)
+    {
+        <div class="col-md-12">
+            <p>No se encontraron campañas que coincidan con la búsqueda.</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover text-nowrap">
+                <thead>
+                    <tr class="bg-green-200">
+                        <th>
+                            IdCampaña
+                        </th>
+                        <th>
+                            Año
+                        </th>
+                        <th>
+                            Nombre Campaña
+                        </th>
+                        <th>
+                            F. Proceso
+                        </th>
+                        <th style="position: sticky; right: 0;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Campanias)
+                    {
+                        <tr>
+                            <td>
+                                @item.IdCampania
+                            </td>
+                            <td>
+                                @item.AnioCampania
+                            </td>
+                            <td>
+                                @item.NombreCampania
+                            </td>
+                            <td>
+                                @item.FechaProceso.ToString("dd/MM/yyyy")
+                            </td>
+                            <td class="text-end" style="position: sticky; right: 0; background-color: #fff;">
+                                <a class="btn-sm btn-warning" asp-action="Editar" asp-route-id="@item.IdCampania" data-bs-toggle="tooltip" data-bs-placement="right" title="Editar Campania"><i class="fa-solid fa-pen"></i></a>
+                                <a class="btn-sm btn-info" asp-action="Detalle" asp-route-id="@item.IdCampania" data-bs-toggle="tooltip" data-bs-placement="right" title="Detalles de la Campaña"><i class="fa-solid fa-list"></i></a>
+                                <a class="btn-sm btn-danger" asp-action="Eliminar" asp-route-id="@item.IdCampania" data-bs-toggle="tooltip" data-bs-placement="right" title="Eliminar Campaña"><i class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<nav class="py-2">
+    <ul class="pagination justify-content-center">
+        @if (Model.TotalPaginas > 1)
+        {
+            int inicio = Math.Max(1, Math.Min(Model.TotalPaginas - 4, Model.PaginaActual - 2));
+            int fin = Math.Min(Model.TotalPaginas, inicio + 4);
+
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", "Campanias", new { busquedaAnio = Model.BusquedaAnio, paginaActual = Model.PaginaActual - 5 })">&laquo;</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", "Campanias", new { busquedaAnio = Model.BusquedaAnio, paginaActual = Model.PaginaActual - 1 })">&lsaquo;</a>
+            </li>
+            @for (int pagina = inicio; pagina <= fin; pagina++)
+            {
+                <li class="page-item @(pagina == Model.PaginaActual ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", "Campanias", new { busquedaAnio = Model.BusquedaAnio, paginaActual = pagina })">@pagina</a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", "Campanias", new { busquedaAnio = Model.BusquedaAnio, paginaActual = Model.PaginaActual + 1 })">&rsaquo;</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", "Campanias", new { busquedaAnio = Model.BusquedaAnio, paginaActual = Model.PaginaActual + 5 })">&raquo;</a>
+            </li>
+        }
+    </ul>
+</nav>
+
+@section Scripts {
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+}
