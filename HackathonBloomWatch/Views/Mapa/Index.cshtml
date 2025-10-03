@@ -5,18 +5,18 @@
 
 @section Filtros {
     <div>
-        <h5 class="text-center mb-3">Filtrar información</h5>
+        <h5 class="text-center mb-3 text-zumthor">Filtrar información</h5>
         <div>
-            <p class="text-green-950 fw-bold">
-                <i class="fa-solid fa-diagram-project text-green-500"></i> Campaña
+            <p class="text-gray-chateau fw-bold">
+                <i class="fa-solid fa-diagram-project text-cream-can"></i> Campaña
             </p>
             <div class="form-floating mb-3">
                 <select id="campania" class="form-select" asp-items="ViewBag.Campanias"></select>
                 <label for="campania" class="form-label">Campaña</label>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <p class="text-green-950 fw-bold mb-0">
-                    <i class="fa-solid fa-map-location-dot text-green-500"></i> Localización
+                <p class="text-gray-chateau fw-bold mb-0">
+                    <i class="fa-solid fa-map-location-dot text-cream-can"></i> Localización
                 </p>
                 <button class="btn btn-sm btn-secondary" onclick="resetearSelects()">
                     <i class="fa-solid fa-rotate-left"></i>
@@ -50,14 +50,14 @@
                 </button>
             </div>
             <div id="spinnerCargando" class="text-center">
-                <div class="spinner-border text-success" role="status">
+                <div class="spinner-border text-azure-radiance" role="status">
                     <span class="visually-hidden">Cargando mapa...</span>
                 </div>
-                <p class="text-success mt-1">Cargando mapa...</p>
+                <p class="text-azure-radiance mt-1">Cargando mapa...</p>
             </div>
             <div class="d-none" id="contenedorNumRegistros">
-                <p class="text-green-950 fw-bold mb-0">
-                    <i class="fa-solid fa-tree text-green-500"></i> <span id="textNumRegistros"></span> <span class="text-green-500" id="numRegistros"></span> registros
+                <p class="text-gray-chateau fw-bold mb-0">
+                    <i class="fa-solid fa-tree text-cream-can"></i> <span id="textNumRegistros"></span> <span class="text-green-500" id="numRegistros"></span> registros
                 </p>
             </div>
         </div>
@@ -70,73 +70,73 @@
 
 <div class="modal fade" id="detalleModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-lg-down modal-xl">
-        <div class="modal-content bg-light">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Detalle</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        <div class="modal-content bg-bunker border-default">
+            <div class="modal-header border-default">
+                <h5 class="modal-title text-zumthor" id="modalLabel">Detalle</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <p class="text-green-950 fw-bold mt-3">
-                            <i class="fa-solid fa-diagram-project text-green-500"></i> Detalle del registro
+                        <p class="text-gray-chateau fw-bold mt-3">
+                            <i class="fa-solid fa-diagram-project text-cream-can"></i> Detalle del registro
                         </p>
-                        <div class="d-flex flex-column p-3 bg-white rounded-3">
-                            <span class="text-green-800">
+                        <div class="d-flex flex-column bg-bunker-muted border-default p-3 rounded-3">
+                            <span class="text-gray-chateau">
                                 Actividad
                             </span>
-                            <span class="mt-1 text-green-950 fw-bold" id="modalTipoActividad"></span>
-                            <span class="mt-3 text-green-800">
+                            <span class="mt-1 text-salem fw-bold" id="modalTipoActividad"></span>
+                            <span class="mt-3 text-gray-chateau">
                                 Estado
                             </span>
-                            <span class="mt-1 text-green-950 fw-bold" id="modalEstado"></span>
-                            <span class="mt-3 text-green-800">
+                            <span class="mt-1 text-salem fw-bold" id="modalEstado"></span>
+                            <span class="mt-3 text-gray-chateau">
                                 Fecha de actividad
                             </span>
-                            <span class="mt-1 text-green-950 fw-bold" id="modalFechaActividad"></span>
+                            <span class="mt-1 text-salem fw-bold" id="modalFechaActividad"></span>
                         </div>
-                        <p class="text-green-950 fw-bold mt-3">
-                            <i class="fa-solid fa-location-dot text-green-500"></i> Información de localización
+                        <p class="text-gray-chateau fw-bold mt-3">
+                            <i class="fa-solid fa-location-dot text-cream-can"></i> Información de localización
                         </p>
-                        <div class="d-flex flex-column p-3 bg-white rounded-3">
-                            <span class="mt-3 text-green-800">
+                        <div class="d-flex flex-column bg-bunker-muted border-default p-3 rounded-3">
+                            <span class="text-gray-chateau">
                                 Provincia
                             </span>
-                            <span class="mt-1 text-green-950 fw-bold" id="modalProvincia"></span>
-                            <span class="mt-3 text-green-800">
+                            <span class="mt-1 text-salem fw-bold" id="modalProvincia"></span>
+                            <span class="mt-3 text-gray-chateau">
                                 Distrito
                             </span>
-                            <span class="mt-1 text-green-950 fw-bold" id="modalDistrito"></span>
-                            <span class="mt-3 text-green-800">
+                            <span class="mt-1 text-salem fw-bold" id="modalDistrito"></span>
+                            <span class="mt-3 text-gray-chateau">
                                 Localidad
                             </span>
-                            <span class="mt-1 text-green-950 fw-bold" id="modalLocalidad"></span>
-                            <span class="mt-3 text-green-800">
+                            <span class="mt-1 text-salem fw-bold" id="modalLocalidad"></span>
+                            <span class="mt-3 text-gray-chateau">
                                 Área (ha)
                             </span>
-                            <span class="mt-1 text-green-950 fw-bold" id="modalArea"></span>
+                            <span class="mt-1 text-salem fw-bold" id="modalArea"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <p class="text-green-950 fw-bold mt-3">
-                            <i class="fa-brands fa-pagelines text-green-500"></i> Especie de Planta
+                        <p class="text-gray-chateau fw-bold mt-3">
+                            <i class="fa-brands fa-pagelines text-cream-can"></i> Especie de Planta
                         </p>
-                        <div class="d-flex flex-column p-3 bg-white rounded-3">
+                        <div class="d-flex flex-column bg-bunker-muted border-default p-3 rounded-3">
                             <div id="modalImagenContainer" class="text-center">
                                 <img id="modalImagen" src="" alt="Imagen de especie" style="max-width: 100%; max-height: 250px;" />
                             </div>
-                            <span class="mt-3 text-green-800">
+                            <span class="mt-3 text-gray-chateau">
                                 Nombre Científico
                             </span>
-                            <span class="mt-1 text-green-950 fw-bold" id="modalNombreEspecie"></span>
-                            <span class="mt-3 text-green-800">
+                            <span class="mt-1 text-salem fw-bold" id="modalNombreEspecie"></span>
+                            <span class="mt-3 text-gray-chateau">
                                 Nombre Común
                             </span>
-                            <span class="mt-1 text-green-950 fw-bold" id="modalNombreComun"></span>
-                            <span class="mt-3 text-green-800">
+                            <span class="mt-1 text-salem fw-bold" id="modalNombreComun"></span>
+                            <span class="mt-3 text-gray-chateau">
                                 Cantidad de Elementos
                             </span>
-                            <span class="mt-1 text-green-950 fw-bold" id="modalCantidadElementos"></span>
+                            <span class="mt-1 text-salem fw-bold" id="modalCantidadElementos"></span>
                         </div>
                     </div>
                 </div>
@@ -147,75 +147,58 @@
 
 <div class="modal fade" id="estadisticaModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-lg-down modal-xl">
-        <div class="modal-content bg-light">
-            <div class="modal-header">
-                <h5 class="modal-title text-green-950" id="modalLabel">Estadísticas - <span id="tituloModal" class="fw-bold"></span></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        <div class="modal-content bg-bunker border-default">
+            <div class="modal-header border-default">
+                <h5 class="modal-title text-zumthor" id="modalLabel">Estadísticas - <span id="tituloModal" class="fw-bold"></span></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
                 <div id="spinnerEstadisticas" class="text-center">
-                    <div class="spinner-border text-success" role="status">
+                    <div class="spinner-border text-azure-radiance" role="status">
                         <span class="visually-hidden">Cargando Estadísticas...</span>
                     </div>
-                    <p class="text-success mt-1">Cargando Estadísticas...</p>
+                    <p class="text-azure-radiance mt-1">Cargando Estadísticas...</p>
                 </div>
                 <div id="contenedorEstadisticas" class="d-none">
                     <div class="row">
                         <div class="col-4">
-                            <div class="bg-white p-3 rounded-3">
-                                <p class="d-flex justify-content-between text-green-950">Macizos Forestales <i class="fa-solid fa-earth-americas text-green-500"></i></p>
+                            <div class="bg-bunker-muted border-default p-3 rounded-3">
+                                <p class="d-flex justify-content-between text-zumthor">Macizos Forestales <i class="fa-solid fa-earth-americas text-cream-can"></i></p>
                                 <div class="d-flex flex-column">
-                                    <span class="text-green-800">
+                                    <span class="text-gray-chateau">
                                         Plantación
                                     </span>
-                                    <span class="text-green-950 display-6" id="totalMacizosPlantacion">0</span>
-                                    <span class="text-green-800">
-                                        Hoyada
-                                    </span>
-                                    <span class="text-green-950 display-6" id="totalMacizosHoyada">0</span>
+                                    <span class="text-salem display-6" id="totalMacizosPlantacion">0</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="bg-white p-3 rounded-3">
-                                <p class="d-flex justify-content-between text-green-950">Área total (ha) <i class="fa-solid fa-draw-polygon text-green-500"></i></p>
+                            <div class="bg-bunker-muted border-default p-3 rounded-3">
+                                <p class="d-flex justify-content-between text-zumthor">Área total (ha) <i class="fa-solid fa-draw-polygon text-cream-can"></i></p>
                                 <div class="d-flex flex-column">
-                                    <span class="text-green-800">
+                                    <span class="text-gray-chateau">
                                         Plantación
                                     </span>
-                                    <span class="text-green-950 display-6" id="areaPlantaciones">0</span>
-                                    <span class="text-green-800">
-                                        Hoyada
-                                    </span>
-                                    <span class="text-green-950 display-6" id="areaHoyadas">0</span>
+                                    <span class="text-salem display-6" id="areaPlantaciones">0</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="bg-white p-3 rounded-3">
-                                <p class="d-flex justify-content-between text-green-950">Cantidad Elementos <i class="fa-solid fa-tree text-green-500"></i></p>
+                            <div class="bg-bunker-muted border-default p-3 rounded-3">
+                                <p class="d-flex justify-content-between text-zumthor">Cantidad Elementos <i class="fa-solid fa-tree text-cream-can"></i></p>
                                 <div class="d-flex flex-column">
-                                    <span class="text-green-800">
+                                    <span class="text-gray-chateau">
                                         Plantación
                                     </span>
-                                    <span class="text-green-950 display-6" id="cantidadElementosPlantacion">0</span>
-                                    <span class="text-green-800">
-                                        Hoyada
-                                    </span>
-                                    <span class="text-green-950 display-6" id="cantidadElementosHoyada">0</span>
+                                    <span class="text-salem display-6" id="cantidadElementosPlantacion">0</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <div class="bg-white p-3 rounded-3" style="aspect-ratio: 2 / 1;">
+                    <div class="mt-3 flex">
+                        <div class="mx-auto" style="max-width:750px;">
+                            <div class="bg-bunker-muted border-default p-3 text-zumthor rounded-3" style="aspect-ratio: 2 / 1;">
                                 <canvas id="chartPlantaciones" class="w-100"></canvas>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="bg-white p-3 rounded-3" style="aspect-ratio: 2 / 1;">
-                                <canvas id="chartHoyadas" class="w-100"></canvas>
                             </div>
                         </div>
                     </div>
@@ -227,159 +210,267 @@
 
 @section Scripts {
     <script>
+        // 🔑 Tu access token de Mapbox
+        const accessToken = "pk.eyJ1IjoicnJvZHJpZ3VlemMyMjAiLCJhIjoiY21nN2kyMTEwMDBqNTJrcHJhdjFlbTVvdSJ9.iStUqhuABLA-eoPR8XhGdA";
 
-        var map = L.map('map').setView([-7.161, -78.512], 1); // Coordenadas aproximadas de Cajamarca
+        mapboxgl.accessToken = accessToken;
 
-        // Capas base
-        var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
+        const map = new mapboxgl.Map({
+            container: "map",
+            style: "mapbox://styles/mapbox/streets-v12", // Cambiar a satellite-v9 para vista satelital
+            center: [-78.512, -7.161],
+            zoom: 7,
+            pitch: 0, // Inclinación para vista 3D (0-60)
+            bearing: 0 // Rotación del mapa
         });
 
-        var esriLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: '&copy; Esri'
-        });
+        // Agregar controles de navegación
+        map.addControl(new mapboxgl.NavigationControl());
 
-        var baseMaps = {
-            "OpenStreetMap": osmLayer,
-            "ESRI Satelital": esriLayer
-        };
-
-        // Agrega la capa base
-        osmLayer.addTo(map);
-        map.options.maxZoom = osmLayer.options.maxZoom - 1;
-
-        L.control.layers(baseMaps).addTo(map);
-
-        // Definir capas vacías
-        var regionCajamarcaLayer = L.layerGroup();
-        var provinciasLayer = L.layerGroup();
-        var distritosLayer = L.layerGroup();
-        var campaniaDetalleLayer = L.layerGroup();
-
-        // ===== Estilos para OSM =====
-        const OSM_BASE = { color: "#3d3d3d", weight: 1, fillOpacity: 0.1 };
-        const OSM_HOVER = { color: "#2fac66", weight: 1, fillOpacity: 0.1 };
-
-        // ===== Estilos para ESRI =====
-        const ESRI_BASE = { color: "#e6e6e6", weight: 1, fillOpacity: 0.1 };
-        const ESRI_HOVER = { color: "#37f0c5", weight: 1, fillOpacity: 0.1 };
+        // Agregar control de estilo (para cambiar entre street y satellite)
+        const layerList = document.getElementById('menu');
+        const inputs = layerList ? layerList.getElementsByTagName('input') : [];
 
         // Variables globales para estilos actuales
-        let currentBaseStyle = OSM_BASE;
-        let currentHoverStyle = OSM_HOVER;
+        let currentBaseStyle = { color: "#3d3d3d", width: 1, opacity: 0.1 };
+        let currentHoverStyle = { color: "#2fac66", width: 1, opacity: 0.1 };
+
+        // IDs de capas y fuentes
+        const CAPAS = {
+            REGION: 'region-cajamarca',
+            PROVINCIAS: 'provincias-cajamarca',
+            DISTRITOS: 'distritos-cajamarca',
+            CAMPANIA: 'campania-detalle'
+        };
+
+        // Variable para rastrear el nivel de zoom actual
+        let nivelCapaActual = null;
+
+        // Variables para controlar la carga
+        let capasEstativasCargadas = 0;
+        const totalCapasEstaticas = 3;
+
+        // Esperar a que el mapa esté completamente cargado
+        map.on('load', function () {
+            // Cargar capas estáticas
+            cargarGeoJSON('/geoJson/region_cajamarca.json', CAPAS.REGION, true);
+            cargarGeoJSON('/geoJson/provincias_cajamarca.json', CAPAS.PROVINCIAS, false);
+            cargarGeoJSON('/geoJson/distritos_cajamarca.json', CAPAS.DISTRITOS, false);
+        });
 
         // Función para cargar GeoJSON estáticos
-        function cargarGeoJSON(url, capa, ajustarZoom = false) {
+        function cargarGeoJSON(url, capaId, ajustarZoom = false) {
             fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                var geoLayer = L.geoJSON(data, {
-                    style: currentBaseStyle,
-                    onEachFeature: function (feature, layer) {
-                        var nivelLugar = "Departamento";
-                        var nombreLugar = "CAJAMARCA";
+                .then(response => response.json())
+                .then(data => {
+                    // Agregar fuente de datos
+                    if (!map.getSource(capaId + '-source')) {
+                        map.addSource(capaId + '-source', {
+                            type: 'geojson',
+                            data: data
+                        });
+                    }
 
-                        if (feature.properties.NOMB_DIST) {
-                            layer.bindTooltip(feature.properties.NOMB_DIST, {
-                                permanent: true,
-                                direction: 'center',
-                                className: 'map-label'
-                            });
-                            nivelLugar = "Distrito";
-                            nombreLugar = feature.properties.NOMB_DIST;
-                        } else if (feature.properties.NOMB_PROV) {
-                            layer.bindTooltip(feature.properties.NOMB_PROV, {
-                                permanent: true,
-                                direction: 'center',
-                                className: 'map-label'
-                            });
-                            nivelLugar = "Provincia";
-                            nombreLugar = feature.properties.NOMB_PROV;
+                    // Agregar capa de relleno
+                    if (!map.getLayer(capaId + '-fill')) {
+                        map.addLayer({
+                            id: capaId + '-fill',
+                            type: 'fill',
+                            source: capaId + '-source',
+                            paint: {
+                                'fill-color': currentBaseStyle.color,
+                                'fill-opacity': currentBaseStyle.opacity
+                            },
+                            layout: {
+                                'visibility': 'none' // Inicialmente oculta
+                            }
+                        });
+                    }
+
+                    // Agregar capa de contorno
+                    if (!map.getLayer(capaId + '-outline')) {
+                        map.addLayer({
+                            id: capaId + '-outline',
+                            type: 'line',
+                            source: capaId + '-source',
+                            paint: {
+                                'line-color': currentBaseStyle.color,
+                                'line-width': currentBaseStyle.width
+                            },
+                            layout: {
+                                'visibility': 'none' // Inicialmente oculta
+                            }
+                        });
+                    }
+
+                    // Agregar etiquetas si existen
+                    agregarEtiquetas(capaId, data);
+
+                    // Ajustar zoom si es necesario
+                    if (ajustarZoom && data.features && data.features.length > 0) {
+                        try {
+                            const bounds = turf.bbox(data);
+                            map.fitBounds(bounds, { padding: 50 });
+                        } catch (e) {
+                            console.error("Error ajustando zoom:", e);
                         }
-
-                        // Eventos de hover
-                        layer.on("mouseover", function () {
-                            layer.setStyle(currentHoverStyle);
-                        });
-                        layer.on("mouseout", function () {
-                            layer.setStyle(currentBaseStyle);
-                        });
-
-                        layer.on("click", function () {
-                            // Mostrar modal con información del lugar
-                            $("#contenedorEstadisticas").addClass("d-none");
-                            $("#spinnerEstadisticas").removeClass("d-none");
-                            $("#estadisticaModal").modal("show");
-
-                            var idCampania = $('#campania').val();
-
-                            $.ajax({
-                                url: '@Url.Action("GetEstadisticaLugar", "Mapa")',
-                                data: {
-                                    idCampania: idCampania,
-                                    nivelLugar: nivelLugar,
-                                    nombreLugar: nombreLugar
-                                },
-                                success: function (dataEstadisticas) {
-
-                                    $("#tituloModal").text(nivelLugar + " " + nombreLugar);
-
-                                    $("#totalMacizosPlantacion").text(dataEstadisticas.totalMacizosPlantacion);
-                                    $("#totalMacizosHoyada").text(dataEstadisticas.totalMacizosHoyada);
-                                    $("#cantidadElementosPlantacion").text(dataEstadisticas.cantidadElementosPlantacion);
-                                    $("#cantidadElementosHoyada").text(dataEstadisticas.cantidadElementosHoyada);
-                                    $("#areaPlantaciones").text(dataEstadisticas.areaPlantaciones);
-                                    $("#areaHoyadas").text(dataEstadisticas.areaHoyadas);
-
-                                    // Cargar gráficos
-                                    generarGrafico(
-                                        'chartPlantaciones',
-                                        dataEstadisticas.labelEspeciesPlantaciones,
-                                        dataEstadisticas.dataPlantaciones,
-                                        '#00B00A', // verde fondo
-                                        'Cantidad de Plantaciones'
-                                    );
-
-                                    generarGrafico(
-                                        'chartHoyadas',
-                                        dataEstadisticas.labelEspeciesHoyadas,
-                                        dataEstadisticas.dataHoyadas,
-                                        '#DB3A33', // marrón fondo
-                                        'Cantidad de Hoyadas'
-                                    );
-
-                                    $("#spinnerEstadisticas").addClass("d-none");
-                                    $("#contenedorEstadisticas").removeClass("d-none");
-                                },
-                                error: function (xhr, status, error) {
-                                    console.error("Error al cargar el mapa:", error);
-                                }
-                            });
-                        });
-
                     }
-                });
-                geoLayer.addTo(capa);
 
-                // Si es la región de Cajamarca, ajustamos el zoom al contenido campaniaDetalleLayer.getLayers()[0].getLayers().length
-                if (ajustarZoom) {
-                    var bounds = geoLayer.getBounds();
-                    if (bounds.isValid()) {
-                        setTimeout(function () {
-                            map.invalidateSize(); // Recalcular tamaño
-                            map.fitBounds(bounds); // Aplicar zoom correctamente
-                        }, 200); // Ajusta el timeout si es necesario
+                    // Incrementar contador de capas cargadas
+                    capasEstativasCargadas++;
+
+                    // Si todas las capas están cargadas, inicializar eventos
+                    if (capasEstativasCargadas === totalCapasEstaticas) {
+                        inicializarEventos();
                     }
-                }
-            })
-            .catch(error => console.error('Error cargando GeoJSON:', error));
+                })
+                .catch(error => console.error('Error cargando GeoJSON:', error));
         }
 
+        // Función para agregar etiquetas
+        function agregarEtiquetas(capaId, data) {
+            // Crear capa de símbolos para las etiquetas
+            if (!map.getLayer(capaId + '-labels')) {
+                map.addLayer({
+                    id: capaId + '-labels',
+                    type: 'symbol',
+                    source: capaId + '-source',
+                    layout: {
+                        'text-field': ['coalesce',
+                            ['get', 'NOMB_DIST'],
+                            ['get', 'NOMB_PROV'],
+                            'CAJAMARCA'
+                        ],
+                        'text-size': 12,
+                        'text-anchor': 'center',
+                        'visibility': 'none'
+                    },
+                    paint: {
+                        'text-color': '#000000',
+                        'text-halo-color': '#ffffff',
+                        'text-halo-width': 2
+                    }
+                });
+            }
+        }
+
+        // Función para inicializar eventos después de cargar todas las capas
+        function inicializarEventos() {
+            // Configurar eventos de zoom
+            configurarEventosZoom();
+
+            // Configurar eventos de hover y click
+            configurarEventosInteraccion();
+
+            // Cargar capa de campaña
+            cargarCampaniaDetalle();
+        }
+
+        // Función para configurar eventos de interacción
+        function configurarEventosInteraccion() {
+            const capas = [CAPAS.REGION, CAPAS.PROVINCIAS, CAPAS.DISTRITOS];
+
+            capas.forEach(capa => {
+                const fillLayerId = capa + '-fill';
+                const outlineLayerId = capa + '-outline';
+
+                // Verificar que la capa existe antes de agregar eventos
+                if (!map.getLayer(fillLayerId)) return;
+
+                // Cambiar cursor al pasar sobre la capa
+                map.on('mouseenter', fillLayerId, function () {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                map.on('mouseleave', fillLayerId, function () {
+                    map.getCanvas().style.cursor = '';
+                    // Restaurar estilo original
+                    map.setPaintProperty(fillLayerId, 'fill-color', currentBaseStyle.color);
+                });
+
+                // Evento hover
+                map.on('mousemove', fillLayerId, function (e) {
+                    if (e.features.length > 0) {
+                        map.setPaintProperty(fillLayerId, 'fill-color', currentHoverStyle.color);
+                    }
+                });
+
+                // Evento click
+                map.on('click', fillLayerId, function (e) {
+                    // Verificar si hay features de campaña en el punto del click
+                    const campaniaFeatures = map.queryRenderedFeatures(e.point, {
+                        layers: [CAPAS.CAMPANIA + '-fill']
+                    });
+
+                    // Si hay features de campaña, no procesar el click del distrito
+                    if (campaniaFeatures && campaniaFeatures.length > 0) {
+                        return;
+                    }
+
+                    if (e.features.length > 0) {
+                        const feature = e.features[0];
+                        const properties = feature.properties;
+
+                        let nivelLugar = "Departamento";
+                        let nombreLugar = "CAJAMARCA";
+
+                        if (properties.NOMB_DIST) {
+                            nivelLugar = "Distrito";
+                            nombreLugar = properties.NOMB_DIST;
+                        } else if (properties.NOMB_PROV) {
+                            nivelLugar = "Provincia";
+                            nombreLugar = properties.NOMB_PROV;
+                        }
+
+                        mostrarEstadisticas(nivelLugar, nombreLugar);
+                    }
+                });
+            });
+        }
+
+        // Función para mostrar estadísticas en modal
+        function mostrarEstadisticas(nivelLugar, nombreLugar) {
+            $("#contenedorEstadisticas").addClass("d-none");
+            $("#spinnerEstadisticas").removeClass("d-none");
+            $("#estadisticaModal").modal("show");
+
+            var idCampania = $('#campania').val();
+
+            $.ajax({
+                url: '@Url.Action("GetEstadisticaLugar", "Mapa")',
+                data: {
+                    idCampania: idCampania,
+                    nivelLugar: nivelLugar,
+                    nombreLugar: nombreLugar
+                },
+                success: function (dataEstadisticas) {
+                    $("#tituloModal").text(nivelLugar + " " + nombreLugar);
+                    $("#totalMacizosPlantacion").text(dataEstadisticas.totalMacizosPlantacion);
+                    $("#cantidadElementosPlantacion").text(dataEstadisticas.cantidadElementosPlantacion);
+                    $("#areaPlantaciones").text(dataEstadisticas.areaPlantaciones);
+
+                    // Cargar gráficos
+                    generarGrafico(
+                        'chartPlantaciones',
+                        dataEstadisticas.labelEspeciesPlantaciones,
+                        dataEstadisticas.dataPlantaciones,
+                        '#00B00A',
+                        'Cantidad de Plantaciones'
+                    );
+
+                    $("#spinnerEstadisticas").addClass("d-none");
+                    $("#contenedorEstadisticas").removeClass("d-none");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error al cargar estadísticas:", error);
+                }
+            });
+        }
+
+        // Función para generar gráficos con Chart.js
         function generarGrafico(idCanvas, etiquetas, datos, colorFondo, etiqueta) {
-            
             const ctx = document.getElementById(idCanvas);
 
-            // Si ya hay un gráfico previo, destrúyelo
             if (ctx.chartInstance) {
                 ctx.chartInstance.destroy();
             }
@@ -416,7 +507,7 @@
                             beginAtZero: true,
                             ticks: {
                                 callback: function (value) {
-                                    return value.toLocaleString('es-PE'); // formato 999,999.99
+                                    return value.toLocaleString('es-PE');
                                 }
                             }
                         }
@@ -424,17 +515,16 @@
                 }
             });
 
-            // Guardar instancia del gráfico para futuras destrucciones
             ctx.chartInstance = chart;
         }
 
+        // Función para cargar detalles de campaña
         function cargarCampaniaDetalle() {
             var idCampania = $('#campania').val();
             var provincia = $('#provincia').val();
             var distrito = $('#distrito').val();
             var localidad = $('#localidad').val();
 
-            // mostrar el spinner de carga
             $("#contenedorNumRegistros").addClass("d-none");
             $("#spinnerCargando").removeClass("d-none");
 
@@ -453,67 +543,176 @@
                     console.error("Error al cargar el mapa:", error);
                 }
             });
-
         }
 
-        function actualizarCampaniaDetalleLayer(geoJsonData){
-            // limpiar capa
-            campaniaDetalleLayer.clearLayers();
+        // Función para actualizar capa de detalle de campaña
+        function actualizarCampaniaDetalleLayer(geoJsonData) {
+            // Remover capas existentes si existen
+            if (map.getLayer(CAPAS.CAMPANIA + '-fill')) {
+                map.removeLayer(CAPAS.CAMPANIA + '-fill');
+            }
+            if (map.getLayer(CAPAS.CAMPANIA + '-outline')) {
+                map.removeLayer(CAPAS.CAMPANIA + '-outline');
+            }
+            if (map.getSource(CAPAS.CAMPANIA + '-source')) {
+                map.removeSource(CAPAS.CAMPANIA + '-source');
+            }
 
-            var geoLayer = L.geoJSON(geoJsonData, {
-                style: function (feature) {
-                    return {
-                        color: feature.properties.estadoActividad !== "Hoyada" ? "#00B00A" : "#DB3A33",
-                        weight: 1,
-                        fillOpacity: 0.3,
-                    };
-                },
-                onEachFeature: function (feature, layer) {
-                    layer.on("click", function () {
-                        $("#modalTipoActividad").text(feature.properties.tipoActividad);
-                        $("#modalEstado").text(feature.properties.estadoActividad);
-                        $("#modalFechaActividad").text(feature.properties.fechaActividad);
-                        $("#modalCantidadElementos").text(feature.properties.cantidadElementos);
-                        $("#modalNombreEspecie").text(feature.properties.nombreEspecie);
-                        $("#modalProvincia").text(feature.properties.provincia);
-                        $("#modalDistrito").text(feature.properties.distrito);
-                        $("#modalArea").text(feature.properties.areaHectareas);
-                        $("#modalLocalidad").text(feature.properties.localidad);
-                        $("#modalNombreComun").text(feature.properties.nombreComun);
+            // Crear colección de features
+            let featureCollection;
 
-                        const imagenUrl = feature.properties.imagenEspecie;
-                        if (imagenUrl) {
-                            $("#modalImagen").attr("src", imagenUrl);
-                            $("#modalImagenContainer").css("display", "block");
-                        } else {
-                            $("#modalImagenContainer").css("display", "none");
-                        }
-                        $("#detalleModal").modal("show");
-                    });
+            if (!geoJsonData || geoJsonData.length === 0) {
+                // Si no hay datos, crear una colección vacía
+                featureCollection = {
+                    type: 'FeatureCollection',
+                    features: []
+                };
+            } else if (Array.isArray(geoJsonData)) {
+                // Si es un array, verificar que tiene features válidos
+                const validFeatures = geoJsonData.filter(item =>
+                    item && item.geometry && item.geometry.coordinates
+                );
+
+                featureCollection = {
+                    type: 'FeatureCollection',
+                    features: validFeatures
+                };
+            } else if (geoJsonData.type === 'FeatureCollection') {
+                // Si ya es una FeatureCollection
+                featureCollection = geoJsonData;
+            } else if (geoJsonData.geometry) {
+                // Si es un solo feature
+                featureCollection = {
+                    type: 'FeatureCollection',
+                    features: [geoJsonData]
+                };
+            } else {
+                // Por defecto, colección vacía
+                featureCollection = {
+                    type: 'FeatureCollection',
+                    features: []
+                };
+            }
+
+            // Agregar nueva fuente
+            map.addSource(CAPAS.CAMPANIA + '-source', {
+                type: 'geojson',
+                data: featureCollection
+            });
+
+            // Agregar capa de relleno con color según estado
+            map.addLayer({
+                id: CAPAS.CAMPANIA + '-fill',
+                type: 'fill',
+                source: CAPAS.CAMPANIA + '-source',
+                paint: {
+                    'fill-color': [
+                        'case',
+                        ['!=', ['get', 'estadoActividad'], 'Hoyada'],
+                        '#00B00A',
+                        '#DB3A33'
+                    ],
+                    'fill-opacity': 0.3
                 }
             });
 
-            geoLayer.addTo(campaniaDetalleLayer);
+            // Agregar capa de contorno
+            map.addLayer({
+                id: CAPAS.CAMPANIA + '-outline',
+                type: 'line',
+                source: CAPAS.CAMPANIA + '-source',
+                paint: {
+                    'line-color': [
+                        'case',
+                        ['!=', ['get', 'estadoActividad'], 'Hoyada'],
+                        '#00B00A',
+                        '#DB3A33'
+                    ],
+                    'line-width': 1
+                }
+            });
 
-            var bounds = geoLayer.getBounds();
-            if (bounds.isValid()) {
-                setTimeout(function () {
-                    map.invalidateSize(); // Recalcular tamaño
-                    map.fitBounds(bounds); // Aplicar zoom correctamente
-                }, 200); // Ajusta el timeout si es necesario
+            // Configurar evento click para mostrar detalles
+            map.on('click', CAPAS.CAMPANIA + '-fill', function (e) {
+                if (e.features.length > 0) {
+                    // Prevenir que el evento se propague a las capas de fondo
+                    e.preventDefault();
+
+                    const props = e.features[0].properties;
+
+                    $("#modalTipoActividad").text(props.tipoActividad || '');
+                    $("#modalEstado").text(props.estadoActividad || '');
+                    $("#modalFechaActividad").text(props.fechaActividad || '');
+                    $("#modalCantidadElementos").text(props.cantidadElementos || '');
+                    $("#modalNombreEspecie").text(props.nombreEspecie || '');
+                    $("#modalProvincia").text(props.provincia || '');
+                    $("#modalDistrito").text(props.distrito || '');
+                    $("#modalArea").text(props.areaHectareas || '');
+                    $("#modalLocalidad").text(props.localidad || '');
+                    $("#modalNombreComun").text(props.nombreComun || '');
+
+                    const imagenUrl = props.imagenEspecie;
+                    if (imagenUrl) {
+                        $("#modalImagen").attr("src", imagenUrl);
+                        $("#modalImagenContainer").css("display", "block");
+                    } else {
+                        $("#modalImagenContainer").css("display", "none");
+                    }
+                    $("#detalleModal").modal("show");
+                }
+            });
+
+            // Cambiar cursor
+            map.on('mouseenter', CAPAS.CAMPANIA + '-fill', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            map.on('mouseleave', CAPAS.CAMPANIA + '-fill', function () {
+                map.getCanvas().style.cursor = '';
+            });
+
+            // Ajustar vista al contenido
+            if (featureCollection.features.length > 0) {
+                try {
+                    const bounds = turf.bbox(featureCollection);
+                    map.fitBounds(bounds, { padding: 50, duration: 1000 });
+                } catch (e) {
+                    console.error("Error al calcular bounds:", e);
+                    // Si falla, ajustar a la región de Cajamarca
+                    if (map.getSource(CAPAS.REGION + '-source')) {
+                        const regionSource = map.getSource(CAPAS.REGION + '-source');
+                        const regionData = regionSource._data;
+                        if (regionData && regionData.features) {
+                            try {
+                                const regionBounds = turf.bbox(regionData);
+                                map.fitBounds(regionBounds, { padding: 50, duration: 1000 });
+                            } catch (err) {
+                                console.error("Error ajustando a región:", err);
+                            }
+                        }
+                    }
+                }
             } else {
-                var cajamarcaBounds = regionCajamarcaLayer.getLayers()[0].getBounds();
-
-                if (cajamarcaBounds.isValid()) {
-                    setTimeout(function () {
-                        map.invalidateSize(); // Recalcular tamaño
-                        map.fitBounds(cajamarcaBounds); // Aplicar zoom correctamente
-                    }, 200); // Ajusta el timeout si es necesario
+                // Si no hay features, ajustar a la región de Cajamarca
+                if (map.getSource(CAPAS.REGION + '-source')) {
+                    const regionSource = map.getSource(CAPAS.REGION + '-source');
+                    const regionData = regionSource._data;
+                    if (regionData && regionData.features) {
+                        try {
+                            const regionBounds = turf.bbox(regionData);
+                            map.fitBounds(regionBounds, { padding: 50, duration: 1000 });
+                        } catch (err) {
+                            console.error("Error ajustando a región:", err);
+                        }
+                    }
                 }
             }
+
             $("#spinnerCargando").addClass("d-none");
-            if (geoJsonData.length > 0) {
-                $("#numRegistros").text(geoJsonData.length);
+            const numRegistros = featureCollection.features.length;
+
+            if (numRegistros > 0) {
+                $("#numRegistros").text(numRegistros);
                 $("#textNumRegistros").text("Se encontraron");
             } else {
                 $("#numRegistros").text("");
@@ -522,100 +721,84 @@
             $("#contenedorNumRegistros").removeClass("d-none");
         }
 
-        // Cargar capas estáticas
-        cargarGeoJSON('/geoJson/region_cajamarca.json', regionCajamarcaLayer, true);
-        cargarGeoJSON('/geoJson/provincias_cajamarca.json', provinciasLayer);
-        cargarGeoJSON('/geoJson/distritos_cajamarca.json', distritosLayer);
+        // Configurar eventos de zoom para mostrar/ocultar capas
+        function configurarEventosZoom() {
+            map.on('zoom', function () {
+                const zoomLevel = map.getZoom();
 
-        // Detectar cambio de mapa base y actualizar estilos globales
-        map.on('baselayerchange', function (e) {
-            if (e.name === "ESRI Satelital") {
-                currentBaseStyle = ESRI_BASE;
-                currentHoverStyle = ESRI_HOVER;
-            } else {
-                currentBaseStyle = OSM_BASE;
-                currentHoverStyle = OSM_HOVER;
-            }
+                // Ocultar todas las capas primero
+                [CAPAS.REGION, CAPAS.PROVINCIAS, CAPAS.DISTRITOS].forEach(capa => {
+                    // Verificar que las capas existen antes de intentar modificarlas
+                    if (map.getLayer(capa + '-fill')) {
+                        map.setLayoutProperty(capa + '-fill', 'visibility', 'none');
+                    }
+                    if (map.getLayer(capa + '-outline')) {
+                        map.setLayoutProperty(capa + '-outline', 'visibility', 'none');
+                    }
+                    if (map.getLayer(capa + '-labels')) {
+                        map.setLayoutProperty(capa + '-labels', 'visibility', 'none');
+                    }
+                });
 
-            // Aplicar el nuevo estilo base a todas las capas visibles
-            cambiarEstilo(regionCajamarcaLayer, currentBaseStyle);
-            cambiarEstilo(provinciasLayer, currentBaseStyle);
-            cambiarEstilo(distritosLayer, currentBaseStyle);
-        });
+                // Mostrar capa según nivel de zoom
+                let capaActiva = null;
+                if (zoomLevel <= 8) {
+                    capaActiva = CAPAS.REGION;
+                } else if (zoomLevel > 8 && zoomLevel <= 9) {
+                    capaActiva = CAPAS.PROVINCIAS;
+                } else if (zoomLevel > 9) {
+                    capaActiva = CAPAS.DISTRITOS;
+                }
 
-        function cambiarEstilo(layerGroup, style) {
-            layerGroup.eachLayer(function (layer) {
-                if (layer.setStyle) {
-                    layer.setStyle(style);
+                if (capaActiva) {
+                    if (map.getLayer(capaActiva + '-fill')) {
+                        map.setLayoutProperty(capaActiva + '-fill', 'visibility', 'visible');
+                    }
+                    if (map.getLayer(capaActiva + '-outline')) {
+                        map.setLayoutProperty(capaActiva + '-outline', 'visibility', 'visible');
+                    }
+                    if (map.getLayer(capaActiva + '-labels')) {
+                        map.setLayoutProperty(capaActiva + '-labels', 'visibility', 'visible');
+                    }
                 }
             });
+
+            // Disparar evento inicial
+            map.fire('zoom');
         }
 
-        cargarCampaniaDetalle();
-
-            // Evento para cambiar capas según el zoom
-        map.on('zoomend', function () {
-            var zoomLevel = map.getZoom();
-
-            map.eachLayer(function (layer) {
-
-                if (layer !== baseMaps["OpenStreetMap"] && layer !== baseMaps["ESRI Satelital"]) {
-                    map.removeLayer(layer);
-                }
-            });
-
-            if (zoomLevel <= 8) {
-                regionCajamarcaLayer.addTo(map);
-            } else if (zoomLevel > 8 && zoomLevel <= 9) {
-                provinciasLayer.addTo(map);
-            } else if (zoomLevel > 9) {
-                distritosLayer.addTo(map);
-            }
-            campaniaDetalleLayer.addTo(map);
-        });
-
-        // obtener los distritos de la provincia seleccionada
+        // Evento para cambiar provincia
         $('#provincia').change(function () {
-
             var provincia = $('#provincia').val();
 
-            $.getJSON('@Url.Action("GetDistritos", "Mapa")',
-                {
-                    provincia: provincia
-                }, function (data) {
-
-                    var items = '<option disabled selected value="">Seleccione el distrito</option>';
-
-                    $.each(data, function (i, distrito) {
-                        items += "<option value='" + distrito + "'>" + distrito + "</option>";
-                    });
-
-                    $('#distrito').html(items);
-                    // resetear localidad
-                    $('#localidad').html('<option disabled selected value="">Seleccione la localidad</option>');
+            $.getJSON('@Url.Action("GetDistritos", "Mapa")', {
+                provincia: provincia
+            }, function (data) {
+                var items = '<option disabled selected value="">Seleccione el distrito</option>';
+                $.each(data, function (i, distrito) {
+                    items += "<option value='" + distrito + "'>" + distrito + "</option>";
                 });
+                $('#distrito').html(items);
+                $('#localidad').html('<option disabled selected value="">Seleccione la localidad</option>');
+            });
         });
 
-        // obtener los distritos de la provincia seleccionada
+        // Evento para cambiar distrito
         $('#distrito').change(function () {
-
             var distrito = $('#distrito').val();
 
-            $.getJSON('@Url.Action("GetLocalidades", "Mapa")',
-                {
-                    distrito: distrito
-                }, function (data) {
-
-                    var items = '<option disabled selected value="">Seleccione la localidad</option>';
-
-                    $.each(data, function (i, localidad) {
-                        items += "<option value='" + localidad + "'>" + localidad + "</option>";
-                    });
-
-                    $('#localidad').html(items);
+            $.getJSON('@Url.Action("GetLocalidades", "Mapa")', {
+                distrito: distrito
+            }, function (data) {
+                var items = '<option disabled selected value="">Seleccione la localidad</option>';
+                $.each(data, function (i, localidad) {
+                    items += "<option value='" + localidad + "'>" + localidad + "</option>";
                 });
+                $('#localidad').html(items);
+            });
         });
 
+        // Función para resetear selects
         function resetearSelects() {
             $('#provincia').val('');
             $('#distrito').val('');
@@ -624,5 +807,26 @@
             $('#localidad').html('<option disabled selected value="">Seleccione la localidad</option>');
         }
 
+        // Cambiar estilo del mapa (opcional - para implementar selector de estilos)
+        function cambiarEstiloMapa(estilo) {
+            const estilos = {
+                'streets': 'mapbox://styles/mapbox/streets-v12',
+                'satellite': 'mapbox://styles/mapbox/satellite-v9',
+                'outdoors': 'mapbox://styles/mapbox/outdoors-v12',
+                'dark': 'mapbox://styles/mapbox/dark-v11'
+            };
+
+            map.setStyle(estilos[estilo] || estilos['streets']);
+
+            // Actualizar estilos según el mapa base
+            if (estilo === 'satellite') {
+                currentBaseStyle = { color: "#e6e6e6", width: 1, opacity: 0.1 };
+                currentHoverStyle = { color: "#37f0c5", width: 1, opacity: 0.1 };
+            } else {
+                currentBaseStyle = { color: "#3d3d3d", width: 1, opacity: 0.1 };
+                currentHoverStyle = { color: "#2fac66", width: 1, opacity: 0.1 };
+            }
+        }
+        
     </script>
 }

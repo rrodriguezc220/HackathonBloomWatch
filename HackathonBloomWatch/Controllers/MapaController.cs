@@ -130,33 +130,22 @@ namespace HackathonBloomWatch.Controllers
 
             // Separar por tipo de actividad una sola vez
             var plantaciones = campaniaDetalles.Where(cd => cd.EstadoActividad == "Plantación").ToList();
-            var hoyadas = campaniaDetalles.Where(cd => cd.EstadoActividad == "Hoyada").ToList();
 
             // Agrupar por especie y contar
             var especiesPlantaciones = plantaciones.GroupBy(cd => cd.EspeciePlanta.NombreComun).Select(g => new { Especie = g.Key, Cantidad = g.Sum(cd => cd.CantidadElementos) }).OrderByDescending(g => g.Cantidad).ToList();
-
-            var especiesHoyadas = hoyadas.GroupBy(cd => cd.EspeciePlanta.NombreComun).Select(g => new { Especie = g.Key, Cantidad = g.Sum(cd => cd.CantidadElementos) }).OrderByDescending(g => g.Cantidad).ToList();
 
             // Preparar datos para Chart.js
             var labelEspeciesPlantaciones = especiesPlantaciones.Select(ep => ep.Especie).ToList();
             var dataPlantaciones = especiesPlantaciones.Select(ep => ep.Cantidad).ToList();
 
-            var labelEspeciesHoyadas = especiesHoyadas.Select(ep => ep.Especie).ToList();
-            var dataHoyadas = especiesHoyadas.Select(ep => ep.Cantidad).ToList();
-
             // Construir objeto de estadística
             var dataEstadisticas = new
             {
                 TotalMacizosPlantacion = plantaciones.Count.ToString("N0"),
-                TotalMacizosHoyada = hoyadas.Count.ToString("N0"),
                 CantidadElementosPlantacion = plantaciones.Sum(cd => cd.CantidadElementos)?.ToString("N0"),
-                CantidadElementosHoyada = hoyadas.Sum(cd => cd.CantidadElementos)?.ToString("N0"),
                 AreaPlantaciones = plantaciones.Sum(cd => cd.MacizoForestal.AreaHectareas)?.ToString("N2"),
-                AreaHoyadas = hoyadas.Sum(cd => cd.MacizoForestal.AreaHectareas)?.ToString("N2"),
                 labelEspeciesPlantaciones,
                 dataPlantaciones,
-                labelEspeciesHoyadas,
-                dataHoyadas
             };
 
             return Json(dataEstadisticas);

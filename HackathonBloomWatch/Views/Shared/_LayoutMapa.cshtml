@@ -17,21 +17,25 @@
     @*Leaflet*@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    @*Mapbox*@
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet" />
+
+
 </head>
 <body>
     <div class="wrapper" style="max-height: 100vh;">
         <aside class="" id="sidebar">
             <div class="sidebar-header d-flex pt-3">
                 <div class="sidebar-logo">
-                    <a asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="~/img/logos/logo_drac_sf.png" style="height: 60px;" />
-                    </a>
+                    <a class="navbar-brand text-azure-radiance text-wrap p-1" asp-area="" asp-controller="Home" asp-action="Index">Bloom Watch</a>
                 </div>
                 <div class="div-btn-collapse">
-                    <button id="toggle-btn-collapse" type="button"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button id="toggle-btn-collapse" type="button" class="text-zumthor"><i class="fa-solid fa-chevron-left"></i></button>
                 </div>
                 <div class="div-btn-expande mt-3 mx-auto d-none">
-                    <button id="toggle-btn-expande" type="button"><i class="fa-solid fa-sliders"></i></button>
+                    <button id="toggle-btn-expande" type="button" class="text-zumthor"><i class="fa-solid fa-sliders"></i></button>
                 </div>
             </div>
             <div class="sidebar-filters p-2 p-md-3" style="overflow-y: auto;">
@@ -56,6 +60,9 @@
     <script src="https://unpkg.com/wellknown/wellknown.js"></script>
     *@
 
+    <!-- Turf.js para cálculos geoespaciales -->
+    <script src="@("https://unpkg.com/@turf/turf@6/turf.min.js")"></script>
+
     @* Chart.js para dashboards *@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
 
@@ -65,13 +72,12 @@
         const btnCollapse = document.querySelector('#toggle-btn-collapse');
         btnCollapse.addEventListener('click', function () {
             document.querySelector("#sidebar").classList.toggle("collapse");
-            setTimeout(() => { map.invalidateSize(); }, 300);
+            setTimeout(() => { map.resize(); }, 300);
         });
-
         const btnExpande = document.querySelector('#toggle-btn-expande');
         btnExpande.addEventListener('click', function () {
             document.querySelector("#sidebar").classList.toggle("collapse");
-            setTimeout(() => { map.invalidateSize(); }, 300);
+            setTimeout(() => { map.resize(); }, 300);
         });
     </script>
 </body>

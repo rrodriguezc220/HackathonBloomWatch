@@ -1,8 +1,56 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="d-flex flex-column justify-content-center" style="min-height: 400px;">
+    <h1 class="text-center text-zumthor">Monitorea la vida.</h1>
+    <h1 class="text-center text-gray-chateau mb-3">Visualiza eventos florales a nivel global.</h1>
+    <a class="btn btn-zumthor mx-auto rounded rounded-pill" asp-area="" asp-controller="Mapa" asp-action="Index">Comenzar</a>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100 mx-auto" style="max-width:400px">
+            <h4 class="text-center text-zumthor">Detección precisa.</h4>
+            <p class="text-center text-gray-chateau">Utiliza observaciones de la NASA para detectar eventos de floración en todo el planeta, con mapas y datos actualizados constantemente.</p>
+        </div>
+    </div>
+    <div class="col-md-6 mb-5">
+        <div class="d-flex flex-column align-items-center">
+            <img class="img-fluid" src="~/img/home/deteccion-precisa.webp" alt="Detección precisa" style="max-height:400px"/>
+        </div>
+    </div>
+    <div class="col-md-6 mb-5 d-none d-md-block">
+        <div class="d-flex flex-column align-items-center">
+            <img class="img-fluid" src="~/img/home/prediccion-avanzada.webp" alt="Predicción avanzada" style="max-height:400px" />
+        </div>
+    </div>
+    <div class="col-md-6 mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100 mx-auto" style="max-width:400px">
+            <h4 class="text-center text-zumthor">Predicción avanzada.</h4>
+            <p class="text-center text-gray-chateau">Aprovecha modelos climáticos para anticipar cambios en la fenología y predecir futuros patrones de floración según región y especie.</p>
+        </div>
+    </div>
+    <div class="col-md-6 mb-5 d-block d-md-none">
+        <div class="d-flex flex-column align-items-center">
+            <img class="img-fluid" src="~/img/home/prediccion-avanzada.webp" alt="Predicción avanzada" style="max-height:400px" />
+        </div>
+    </div>
+    <div class="col-md-6 mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100 mx-auto" style="max-width:400px">
+            <h4 class="text-center text-zumthor">Gestión eficiente.</h4>
+            <p class="text-center text-gray-chateau">Herramientas para planificar y gestionar la agricultura, biodiversidad y respuesta a eventos ambientales vinculados a la floración.</p>
+        </div>
+    </div>
+    <div class="col-md-6 mb-5">
+        <div class="d-flex flex-column align-items-center">
+            <img class="img-fluid" src="~/img/home/gestion-eficiente.webp" alt="Gestión eficiente" style="max-height:400px" />
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-column justify-content-center" style="min-height: 400px;">
+    <h3 class=" text-center text-zumthor">Únete a la exploración global.</h3>
+    <p class="text-center text-gray-chateau mx-auto" style="max-width:210px;">Comienza a descubrir patrones de floración y apoya la ciencia ciudadana.</p>
+    <a class="btn btn-zumthor mx-auto rounded rounded-pill" asp-area="" asp-controller="Mapa" asp-action="Index">Comenzar</a>
 </div>

@@ -1,29 +1,23 @@
 
 :root {
-    /* Para los colores primarios */
-    --cg-50: #f1fcf5;
-    --cg-100: #dff9ea;
-    --cg-200: #c1f1d5;
-    --cg-300: #90e5b5;
-    --cg-400: #58d08d;
-    --cg-500: #2fac66; /* main */
-    --cg-600: #239656;
-    --cg-700: #1f7646;
-    --cg-800: #1e5d3b;
-    --cg-900: #1a4d32;
-    --cg-950: #092a19;
-    /* Para los colores secundario */
-    --b-50: #f6f6f6;
-    --b-100: #e7e7e7;
-    --b-200: #d1d1d1;
-    --b-300: #b0b0b0;
-    --b-400: #888888;
-    --b-500: #6d6d6d;
-    --b-600: #5d5d5d;
-    --b-700: #4f4f4f;
-    --b-800: #454545;
-    --b-900: #3d3d3d;
-    --b-950: #000000; /* main */
+    /* Fondo principal: (gris oscuro casi negro) */
+    --color-bunker: #0d1117;
+    /* Fondo muted */
+    --color-bunker-muted: #151b23;
+    /* Bordes */
+    --color-mako: #3d444d;
+    /* Texto principal: (blanco suave) */
+    --color-zumthor: #e6edf3;
+    /* Texto secundario: (gris claro para subtítulos y párrafos) */
+    --color-gray-chateau-500: #9ba3b0;
+    /* Color primario (acento): (azul, botones y enlaces) */
+    --color-azure-radiance: #2f81f7;
+    /* Color secundario: (verde naturaleza para resaltar vegetación en mapa) */
+    --color-salem: #2eb94d;
+    /* Resaltado / Hover: (amarillo dorado para eventos detectados) */
+    --color-cream-can: #f0c75e;
+    /* Errores / alertas: (rojo vivo, contrastante) */
+    --color-sunset-orange: #f85149;
 }
 
 html {
@@ -37,12 +31,13 @@ html {
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    background: var(--color-bunker);
+    margin-bottom: 60px;
 }
 
 .w-max-1200 {
@@ -57,8 +52,84 @@ body {
     width: 100%;
     height: 60px;
     line-height: 59px;
-    background-color: var(--b-50);
 }
+
+.border-default {
+    border: 1px solid var(--color-mako) !important;
+}
+
+.bg-bunker {
+    background: var(--color-bunker) !important;
+}
+
+.bg-bunker-muted {
+    background: var(--color-bunker-muted) !important;
+}
+
+.form-select {
+    background: var(--color-bunker-muted) !important;
+    color: var(--color-zumthor) !important;
+    border: 1px solid var(--color-mako) !important;
+}
+
+.form-label {
+    color: var(--color-zumthor) !important;
+}
+
+.bg-zumthor {
+    background: var(--color-zumthor) !important;
+}
+
+.bg-azure-radiance {
+    background: var(--color-azure-radiance) !important;
+}
+
+.bg-salem {
+    background: var(--color-salem) !important;
+}
+
+.bg-cream-can {
+    background: var(--color-cream-can) !important;
+}
+
+.bg-sunset-orange {
+    background: var(--color-sunset-orange) !important;
+}
+
+.text-zumthor {
+    color: var(--color-zumthor) !important;
+}
+
+.text-gray-chateau {
+    color: var(--color-gray-chateau-500) !important;
+}
+
+.text-azure-radiance {
+    color: var(--color-azure-radiance) !important;
+}
+
+.text-salem {
+    color: var(--color-salem) !important;
+}
+
+.text-cream-can {
+    color: var(--color-cream-can) !important;
+}
+
+.text-sunset-orange {
+    color: var(--color-sunset-orange) !important;
+}
+
+/* Boton solid */
+.btn-zumthor {
+    color: black;
+    background-color: var(--color-zumthor);
+}
+
+    .btn-zumthor:hover {
+        transform: scale(1.05)
+    }
+
 
 /* Estilos NavBar */
 
@@ -151,3 +222,11 @@ body {
     .zoomable-image:hover img {
         transform: scale(2.0); /* Ajusta el valor para controlar el nivel de zoom */
     }
+
+/* Estilos del scroll dark */
+
+
+* {
+    scrollbar-width: auto; /* thin | auto */
+    scrollbar-color: #aeb2b1 #2a2c2c; /* thumb | track */
+}
