@@ -9,6 +9,7 @@
     /* Texto principal: (blanco suave) */
     --color-zumthor: #e6edf3;
     /* Texto secundario: (gris claro para subtítulos y párrafos) */
+    --color-gray-chateau-400: #b4bcc5;
     --color-gray-chateau-500: #9ba3b0;
     /* Color primario (acento): (azul, botones y enlaces) */
     --color-azure-radiance: #2f81f7;
@@ -100,6 +101,10 @@ body {
     color: var(--color-zumthor) !important;
 }
 
+.text-gray-chateau-400 {
+    color: var(--color-gray-chateau-400) !important;
+}
+
 .text-gray-chateau {
     color: var(--color-gray-chateau-500) !important;
 }
@@ -121,12 +126,13 @@ body {
 }
 
 /* Boton solid */
-.btn-zumthor {
-    color: black;
-    background-color: var(--color-zumthor);
+.btn-azure-radiance {
+    color: white;
+    background-color: var(--color-azure-radiance);
 }
 
-    .btn-zumthor:hover {
+    .btn-azure-radiance:hover {
+        color: white;
         transform: scale(1.05)
     }
 

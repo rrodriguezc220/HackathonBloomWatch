@@ -2,10 +2,31 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="d-flex flex-column justify-content-center" style="min-height: 400px;">
-    <h1 class="text-center text-zumthor">Monitorea la vida.</h1>
-    <h1 class="text-center text-gray-chateau mb-3">Visualiza eventos florales a nivel global.</h1>
-    <a class="btn btn-zumthor mx-auto rounded rounded-pill" asp-area="" asp-controller="Mapa" asp-action="Index">Comenzar</a>
+<div class="position-relative">
+    <div class="position-relative">
+        <video autoplay loop muted playsinline class="img-fluid w-100" style="min-height: 90vh; max-height:90vh; object-fit: cover; filter: brightness(0.7);">
+            <source src="~/videos/hero/video-hero.webm" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        </div>
+    <div class="position-absolute top-0 start-0 w-100 h-100 text-white">
+        <div class="d-flex flex-column justify-content-center h-100">
+            <h1 class="text-center text-zumthor fw-bold" style="font-size: 3em;">Monitorea la vida</h1>
+            <p class="text-center text-gray-chateau-400 mb-3" style="font-size: 1.1875em;">Visualiza eventos florales a nivel global.</p>
+            <a class="btn btn-lg btn-azure-radiance mx-auto rounded rounded-pill" asp-area="" asp-controller="Mapa" asp-action="Index">Comenzar <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+</div>
+
+<div class="my-5 d-flex align-items-center justify-content-center" style="min-height:400px;">
+    <div class="p-3 border-default bg-bunker-muted" style="max-width:600px; border-radius: 20px;">
+        <h2 class="text-center text-zumthor my-4">¿Qué es Fluorescencia?</h2>
+        <p class="text-center text-gray-chateau mx-auto">
+            Las plantas en crecimiento emiten un tipo de luz detectable por los satélites de la NASA que orbitan a cientos de kilómetros sobre la Tierra. Partes de Norteamérica parecen brillar en esta visualización, representando un año promedio. El gris indica regiones con poca o ninguna fluorescencia; el rojo, el rosa y el blanco indican alta fluorescencia.
+            Estudio de Visualización Científica de la NASA
+        </p>
+    </div>
 </div>
 
 <div class="row">
@@ -17,12 +38,12 @@
     </div>
     <div class="col-md-6 mb-5">
         <div class="d-flex flex-column align-items-center">
-            <img class="img-fluid" src="~/img/home/deteccion-precisa.webp" alt="Detección precisa" style="max-height:400px"/>
+            <img class="img-fluid" src="~/img/home/deteccion-precisa.webp" alt="Detección precisa" style="max-height:400px; border-radius: 20px;" />
         </div>
     </div>
     <div class="col-md-6 mb-5 d-none d-md-block">
         <div class="d-flex flex-column align-items-center">
-            <img class="img-fluid" src="~/img/home/prediccion-avanzada.webp" alt="Predicción avanzada" style="max-height:400px" />
+            <img class="img-fluid" src="~/img/home/prediccion-avanzada.webp" alt="Predicción avanzada" style="max-height:400px; border-radius: 20px;" />
         </div>
     </div>
     <div class="col-md-6 mb-5">
@@ -33,7 +54,7 @@
     </div>
     <div class="col-md-6 mb-5 d-block d-md-none">
         <div class="d-flex flex-column align-items-center">
-            <img class="img-fluid" src="~/img/home/prediccion-avanzada.webp" alt="Predicción avanzada" style="max-height:400px" />
+            <img class="img-fluid" src="~/img/home/prediccion-avanzada.webp" alt="Predicción avanzada" style="max-height:400px; border-radius: 20px;" />
         </div>
     </div>
     <div class="col-md-6 mb-5">
@@ -44,7 +65,7 @@
     </div>
     <div class="col-md-6 mb-5">
         <div class="d-flex flex-column align-items-center">
-            <img class="img-fluid" src="~/img/home/gestion-eficiente.webp" alt="Gestión eficiente" style="max-height:400px" />
+            <img class="img-fluid" src="~/img/home/gestion-eficiente.webp" alt="Gestión eficiente" style="max-height:400px; border-radius: 20px;" />
         </div>
     </div>
 </div>
@@ -52,5 +73,5 @@
 <div class="d-flex flex-column justify-content-center" style="min-height: 400px;">
     <h3 class=" text-center text-zumthor">Únete a la exploración global.</h3>
     <p class="text-center text-gray-chateau mx-auto" style="max-width:210px;">Comienza a descubrir patrones de floración y apoya la ciencia ciudadana.</p>
-    <a class="btn btn-zumthor mx-auto rounded rounded-pill" asp-area="" asp-controller="Mapa" asp-action="Index">Comenzar</a>
+    <a class="btn btn-lg btn-azure-radiance mx-auto rounded rounded-pill" asp-area="" asp-controller="Mapa" asp-action="Index">Comenzar <i class="fa-solid fa-arrow-right"></i></a>
 </div>
